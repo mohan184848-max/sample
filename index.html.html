@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ERP Delivery Challan</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef1f5;
+margin:0;
+}
+
+.header{
+background:#1f2937;
+color:white;
+padding:15px;
+font-size:20px;
+}
+
+.container{
+display:flex;
+padding:20px;
+gap:20px;
+}
+
+.box{
+background:white;
+padding:20px;
+border-radius:8px;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+.left{
+width:300px;
+}
+
+.right{
+flex:1;
+}
+
+input{
+width:100%;
+padding:8px;
+margin:5px 0;
+}
+
+button{
+padding:8px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:4px;
+cursor:pointer;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+}
+
+th,td{
+border:1px solid #ccc;
+padding:8px;
+text-align:center;
+}
+
+.delete{
+background:red;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+LISMOUNT TEX ERP - DELIVERY CHALLAN
+</div>
+
+<div class="container">
+
+<div class="box left">
+
+<h3>Challan Info</h3>
+
+<label>Challan No</label>
+<input id="challan">
+
+<label>Date</label>
+<input type="date" id="date">
+
+<label>Customer Address</label>
+<input id="customer">
+
+<label>Quality</label>
+<input id="quality">
+
+<hr>
+
+<h3>Add Roll</h3>
+
+<label>Roll No</label>
+<input id="roll">
+
+<label>Meter</label>
+<input type="number" id="meter">
+
+<label>Net Weight</label>
+<input type="number" id="net">
+
+<button onclick="addRoll()">ADD ROLL</button>
+
+</div>
+
+<div class="box right">
+
+<h3>Roll Details</h3>
+
+<table id="table">
+
+<tr>
+<th>SL</th>
+<th>Roll</th>
+<th>Meter</th>
+<th>Net</th>
+<th>Gross</th>
+<th>Delete</th>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+
+let challanNo=813
+document.getElementById("challan").value="D"+challanNo
+
+document.getElementById("date").value=
+new Date().toISOString().split("T")[0]
+
+let sl=1
+
+function addRoll(){
+
+let roll=document.getElementById("roll").value
+let meter=document.getElementById("meter").value
+let net=document.getElementById("net").value
+
+if(!roll || !meter || !net){
+alert("Fill data")
+return
+}
+
+let gross=(parseFloat(net)+0.250).toFixed(3)
+
+let table=document.getElementById("table")
+
+let row=table.insertRow()
+
+row.insertCell(0).innerHTML=sl++
+row.insertCell(1).innerHTML=roll
+row.insertCell(2).innerHTML=meter
+row.insertCell(3).innerHTML=net
+row.insertCell(4).innerHTML=gross
+
+row.insertCell(5).innerHTML=
+'<button class="delete" onclick="del(this)">X</button>'
+
+document.getElementById("roll").value=""
+document.getElementById("meter").value=""
+document.getElementById("net").value=""
+
+}
+
+function del(btn){
+
+btn.parentNode.parentNode.remove()
+
+}
+
+</script>
+
+</body>
+</html>
