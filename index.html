@@ -1,174 +1,363 @@
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Modern ERP Delivery Challan</title>
+<title>Lismount Delivery Challan</title>
+
 <style>
-body { font-family: Arial, sans-serif; margin:20px; background:#f4f6f8; }
-header { display:flex; align-items:center; padding:15px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.15); margin-bottom:20px; border-radius:8px;}
-header img { height:60px; margin-right:15px; }
-header .company-info { line-height:1.2; }
-h2 { text-align:center; margin-bottom:15px; color:#1e3a8a; }
-section { background:#fff; padding:15px; margin-bottom:15px; box-shadow:0 1px 5px rgba(0,0,0,0.1); border-radius:8px; }
-label { display:inline-block; width:140px; margin-top:5px; }
-input, button { padding:6px; margin-top:5px; border-radius:4px; border:1px solid #ccc; }
-button { cursor:pointer; background:#1e3a8a; color:#fff; border:none; transition:0.2s; }
-button:hover { background:#374ea0; }
-table { width:100%; border-collapse:collapse; margin-top:10px; background:#fff; border-radius:8px; overflow:hidden; }
-th, td { border:1px solid #444; padding:10px; text-align:center; }
-th { background:#1e3a8a; color:#fff; }
-tr:nth-child(even){ background:#f3f4f6; }
-tr.specialRow { background:#ffe6e6; font-weight:bold; }
-.totalRow { font-weight:bold; background:#e2e8f0; }
+
+@page{
+size:A4;
+margin:3mm;
+}
+
+*{
+font-size:7px;
+font-family:calibri;
+text-transform:uppercase;
+box-sizing:border-box;
+}
+
+body{
+margin:15;
+}
+
+h1{
+text-align:center;
+font-size:10px;
+margin:5px;
+}
+
+.company{
+text-align:center;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+table-layout:fixed;
+margin-top:3px;
+}
+
+table,th,td{
+border:1px solid black;
+}
+
+th,td{
+padding:2px;
+text-align:center;
+word-wrap:break-word;
+}
+
+input,textarea{
+width:80%;
+border:none;
+outline:none;
+font-size:8px;
+}
+
+textarea{
+resize:none;
+overflow:hidden;
+min-height:10px;
+}
+
+.totalbox{
+width:40%;
+margin-left:auto;
+margin-top:5px;
+}
+
+.signature{
+text-align:right;
+margin-top:12px;
+}
+
+.buttons{
+margin-top:4px;
+}
+
+button{
+font-size:8px;
+padding:3px 6px;
+}
+
+@media print{
+
+.buttons{
+display:none;
+}
+
+button{
+display:none;
+}
+
+}
+
 </style>
+
 </head>
+
 <body>
 
-<header>
-<img src="https://via.placeholder.com/100x60.png?text=Logo" alt="Company Logo">
-<div class="company-info">
-<strong>LISMOUNT TEX</strong><br>
-123 Textile Street, Mettukattupudur<br>
-GSTIN: 33ABCDE1234F1Z5
+<h1>LISMOUNT TEX INDIA LLP</h1>
+
+<div class="company">
+
+BUILDING NO./FLAT NO.: 1/250-D NALLAGOUNDAN PALAYAM<br>
+CHENGAPPALLI, TIRUPPUR, TAMIL NADU - 638812<br>
+GST NO : 33AALFL6261D1ZG
+
 </div>
-</header>
 
-<h2>Delivery Challan</h2>
+<h2 style="text-align:center">DELIVERY CHALLAN</h2>
 
-<section id="challan-info">
-<strong>Challan No:</strong> <span id="challanNo"> </label> <input type<challanNo><br>
-<strong>Date:</strong> <span id="challanDate">DD/MM/YYYY</span>
-</section>
+<table>
 
-<section id="customer-info">
-<label>Customer GST:</label><input type="text" id="customerGST" placeholder="Enter GST"><br>
-<label>Customer Name:</label><input type="text" id="customer"><br>
-<label>Customer Address:</label><input type="text" id="address"><br>
-</section>
+<tr>
+<td><b>DC NO</b></td>
+<td><input></td>
 
-<section id="item-entry">
-<label>Fabric / Quality:</label><input type="text" id="quality"><br>
-<label>Rolls / Meter:</label><input type="number" id="rolls"><br>
-<label>Weight (kg):</label><input type="number" id="weight"><br>
-<label>GST %:</label><input type="number" id="gst" value="5"><br>
-<button onclick="addItem()">Add Item</button>
-</section>
+<td><b>DATE</b></td>
+<td><input type="date"></td>
+</tr>
 
-<table id="itemsTable">
-<thead>
-<tr><th>#</th><th>Fabric / Quality</th><th>Rolls/Meter</th><th>Weight</th><th>GST %</th><th>Remove</th></tr>
-</thead>
-<tbody></tbody>
-<tfoot>
-<tr class="totalRow"><td colspan="2">Total</td><td id="totalRolls">0</td><td id="totalWeight">0</td><td>-</td><td>-</td></tr>
-</tfoot>
+<tr>
+<td><b>CUSTOMER NAME</b></td>
+<td><input></td>
+
+<td><b>CUSTOMER GST</b></td>
+<td><input id="custgst" oninput="calculateTotals()"></td>
+</tr>
+
+<tr>
+<td><b>CUSTOMER ADDRESS</b></td>
+<td colspan="3"><textarea rows="2"></textarea></td>
+</tr>
+
+</table>
+
+<table id="rollTable">
+<tr>
+<td><b>ITEM</b></td>
+<td colspan="6"><textarea rows="1"></textarea></td>
+</tr>
+<tr>
+
+<th>SL</th>
+<th>ROLL NO</th>
+<th>METERS</th>
+<th>NET WEIGHT</th>
+<th>PRICE</th>
+<th>AMOUNT</th>
+<th>ACTION</th>
+
+</tr>
+
+<tr>
+
+<td>1</td>
+
+<td><textarea rows="1"></textarea></td>
+
+<td><input class="meters" type="number" oninput="calc(this)"></td>
+
+<td><input class="netwt" type="number" oninput="calculateTotals()"></td>
+
+<td><input class="price" type="number" oninput="calc(this)"></td>
+
+<td><input class="amount" readonly></td>
+
+<td><button onclick="deleteRow(this)">DELETE</button></td>
+
+</tr>
+
 </table>
 
 <div class="buttons">
-<button onclick="generateChallan()">Generate Challan</button>
-<button onclick="downloadPDF()">Download PDF</button>
+
+<button onclick="addRow()">ADD ROLL</button>
+
+<button onclick="window.print()">PRINT</button>
+
 </div>
 
-<section id="challan-display"></section>
+<table class="totalbox">
 
-<!-- Libraries -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<tr>
+<td>TOTAL ROLLS</td>
+<td id="totalRolls">1</td>
+</tr>
+
+<tr>
+<td>TOTAL WEIGHT</td>
+<td id="totalWeight">0</td>
+</tr>
+
+<tr>
+<td>SUB TOTAL</td>
+<td id="subTotal">0</td>
+</tr>
+
+<tr>
+<td>CGST</td>
+<td id="cgst">0</td>
+</tr>
+
+<tr>
+<td>SGST</td>
+<td id="sgst">0</td>
+</tr>
+
+<tr>
+<td>IGST</td>
+<td id="igst">0</td>
+</tr>
+
+<tr>
+<td><b>GRAND TOTAL</b></td>
+<td id="grandTotal">0</td>
+</tr>
+
+</table>
+
+<div class="signature">
+
+FOR LISMOUNT TEX INDIA LLP
+
+<br><br>
+
+AUTHORISED SIGNATORY
+
+</div>
 
 <script>
-// Customer database
-const customers = {
-    "33AAAAA1111A1Z5": {name: "Kasthuri Textiles", address: "123 Textile Street, Mettukattupudur"},
-    "33BBBBB2222B1Z5": {name: "LISMOUNT Traders", address: "456 Fabric Avenue, Chennai"}
-};
 
-// Auto-fill customer info
-document.getElementById('customerGST').addEventListener('input', function(){
-    const gst = this.value.trim();
-    if(customers[gst]){
-        document.getElementById('customer').value = customers[gst].name;
-        document.getElementById('address').value = customers[gst].address;
-    } else {
-        document.getElementById('customer').value = '';
-        document.getElementById('address').value = '';
-    }
-});
+function calc(el){
 
-let items = [];
-let challanNumber = Math.floor(Math.random()*9000)+1000;
-document.getElementById('challanNo').innerText = challanNumber;
-document.getElementById('challanDate').innerText = new Date().toLocaleDateString();
+let row=el.parentElement.parentElement
 
-function addItem(){
-    const quality=document.getElementById('quality').value.trim();
-    const rolls=parseFloat(document.getElementById('rolls').value);
-    const weight=parseFloat(document.getElementById('weight').value);
-    const gst=parseFloat(document.getElementById('gst').value) || 5;
-    if(!quality || !rolls){ alert("Fill Fabric and Rolls"); return; }
-    items.push({quality,rolls,weight:weight||0,gst});
-    renderTable();
-    document.getElementById('quality').value='';
-    document.getElementById('rolls').value='';
-    document.getElementById('weight').value='';
+let meters=row.querySelector(".meters").value
+let price=row.querySelector(".price").value
+
+row.querySelector(".amount").value=meters*price||""
+
+calculateTotals()
+
 }
 
-function renderTable(){
-    const tbody = document.querySelector("#itemsTable tbody");
-    tbody.innerHTML="";
-    let totalRolls=0, totalWeight=0;
-    items.forEach((item,index)=>{
-        const tr = document.createElement("tr");
-        tr.innerHTML=`<td>${index+1}</td><td>${item.quality}</td><td>${item.rolls}</td><td>${item.weight}</td><td>${item.gst}</td><td><button onclick="removeItem(${index})">X</button></td>`;
-        tbody.appendChild(tr);
-        totalRolls += item.rolls;
-        totalWeight += item.weight;
-    });
-    document.getElementById('totalRolls').innerText = totalRolls;
-    document.getElementById('totalWeight').innerText = totalWeight;
+function addRow(){
+
+let table=document.getElementById("rollTable")
+
+let rowCount=table.rows.length
+
+let row=table.insertRow(rowCount)
+
+row.innerHTML=`
+
+<td>${rowCount}</td>
+
+<td><textarea rows="1"></textarea></td>
+
+<td><input class="meters" type="number" oninput="calc(this)"></td>
+
+<td><input class="netwt" type="number" oninput="calculateTotals()"></td>
+
+<td><input class="price" type="number" oninput="calc(this)"></td>
+
+<td><input class="amount" readonly></td>
+
+<td><button onclick="deleteRow(this)">DELETE</button></td>
+
+`
+
+updateSerial()
+
 }
 
-function removeItem(index){
-    items.splice(index,1);
-    renderTable();
+function deleteRow(btn){
+
+btn.parentElement.parentElement.remove()
+
+updateSerial()
+
+calculateTotals()
+
 }
 
-function generateChallan(){
-    const customer=document.getElementById('customer').value.trim();
-    const address=document.getElementById('address').value.trim();
-    const custGST=document.getElementById('customerGST').value.trim();
-    if(!customer || !address || !custGST){ alert("Enter customer details"); return; }
-    let html=`<h3 style="color:#1e3a8a;">Delivery Challan</h3>
-    <p><strong>Challan No:</strong> ${challanNumber}</p>
-    <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
-    <p><strong>Customer Name:</strong> ${customer}</p>
-    <p><strong>Customer Address:</strong> ${address}</p>
-    <p><strong>Customer GST:</strong> ${custGST}</p>
-    <table border="1" cellspacing="0" cellpadding="5" style="width:100%;border-collapse:collapse;">
-    <tr><th>#</th><th>Fabric / Quality</th><th>Rolls/Meter</th><th>Weight</th><th>GST %</th></tr>`;
-    let totalRolls=0,totalWeight=0;
-    items.forEach((item,index)=>{
-        html+=`<tr><td>${index+1}</td><td>${item.quality}</td><td>${item.rolls}</td><td>${item.weight}</td><td>${item.gst}</td></tr>`;
-        totalRolls+=item.rolls; totalWeight+=item.weight;
-    });
-    html+=`<tr style="font-weight:bold;background:#e2e8f0;"><td colspan="2">Total</td><td>${totalRolls}</td><td>${totalWeight}</td><td>-</td></tr></table>`;
-    document.getElementById('challan-display').innerHTML=html;
+function updateSerial(){
+
+let table=document.getElementById("rollTable")
+
+for(let i=1;i<table.rows.length;i++){
+
+table.rows[i].cells[0].innerHTML=i
+
 }
 
-function downloadPDF(){
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF('p','pt','a4');
-    const challan = document.getElementById('challan-display');
-    html2canvas(challan).then(canvas=>{
-        const imgData = canvas.toDataURL('image/png');
-        const imgProps = doc.getImageProperties(imgData);
-        const pdfWidth = doc.internal.pageSize.getWidth() - 40;
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-        doc.addImage(imgData,'PNG',20,20,pdfWidth,pdfHeight);
-        doc.save(`Challan_${challanNumber}.pdf`);
-    });
+document.getElementById("totalRolls").innerText=table.rows.length-1
+
 }
+
+function calculateTotals(){
+
+let netwt=document.querySelectorAll(".netwt")
+
+let amount=document.querySelectorAll(".amount")
+
+let totalWeight=0
+
+let subTotal=0
+
+netwt.forEach(n=>{totalWeight+=Number(n.value)||0})
+
+amount.forEach(a=>{subTotal+=Number(a.value)||0})
+
+let gst=document.getElementById("custgst").value
+
+let cgst=0
+let sgst=0
+let igst=0
+
+if(gst.startsWith("33")){
+
+cgst=subTotal*0.025
+sgst=subTotal*0.025
+
+}else{
+
+igst=subTotal*0.05
+
+}
+
+document.getElementById("totalWeight").innerText=totalWeight.toFixed(2)
+
+document.getElementById("subTotal").innerText=subTotal.toFixed(2)
+
+document.getElementById("cgst").innerText=cgst.toFixed(2)
+
+document.getElementById("sgst").innerText=sgst.toFixed(2)
+
+document.getElementById("igst").innerText=igst.toFixed(2)
+
+document.getElementById("grandTotal").innerText=(subTotal+cgst+sgst+igst).toFixed(2)
+
+}
+
+document.addEventListener("input",function(e){
+
+if(e.target.tagName.toLowerCase()=="textarea"){
+
+e.target.style.height="auto"
+e.target.style.height=e.target.scrollHeight+"px"
+
+}
+
+})
+
 </script>
 
 </body>
 </html>
+```
