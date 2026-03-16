@@ -1,54 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Manual Delivery Challan</title>
+<title>Lismount Tex Auto Challan</title>
+
 <style>
-    body { font-family: Arial; margin: 20px; color: #222; }
-    h2 { text-align: center; }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    table, th, td { border: 1px solid #444; }
-    th, td { padding: 8px; text-align: center; }
-    .signature { margin-top: 60px; text-align: center; border-top: 1px solid #000; width: 40%; float: right; padding-top: 5px; }
+
+body{font-family:Arial;margin:40px}
+
+table{width:100%;border-collapse:collapse}
+
+table,th,td{border:1px solid black}
+
+th,td{padding:6px;text-align:center}
+
+input{width:100%;border:none;text-align:center}
+
 </style>
+
 </head>
+
 <body>
 
-<h2>DELIVERY CHALLAN</h2>
+<h2>LISMOUNT TEX INDIA LLP<br>DELIVERY CHALLAN</h2>
 
-<div>
-    <strong>Company:</strong> ABC TEXTILES PVT. LTD.<br>
-    <strong>Address:</strong> 123, Market Street, Chennai - 600 001<br>
-    <strong>GSTIN:</strong> 33AAACXXXXX1Z9<br>
-    <strong>Challan No:</strong> _____________ &nbsp;&nbsp;&nbsp; <strong>Date:</strong> _____________
-</div>
+Date : <input type="date" id="date">
 
-<div style="margin-top: 20px;">
-    <strong>Delivered To:</strong> _______________________<br>
-    <strong>Address:</strong> ___________________________<br>
-    <strong>Contact:</strong> ___________________________
-</div>
+Challan No : <input id="dc">
 
-<table>
-    <tr>
-        <th>Sl. No.</th>
-        <th>Description of Fabric</th>
-        <th>Meters</th>
-        <th>Roll No.</th>
-        <th>Net Weight (kg)</th>
-        <th>Gross Weight (kg)</th>
-        <th>Amount (₹)</th>
-    </tr>
-    <tr><td>1</td><td>________________</td><td>____</td><td>____</td><td>____</td><td>____</td><td>____</td></tr>
-    <tr><td>2</td><td>________________</td><td>____</td><td>____</td><td>____</td><td>____</td><td>____</td></tr>
-    <tr><td>3</td><td>________________</td><td>____</td><td>____</td><td>____</td><td>____</td><td>____</td></tr>
-    <tr><td>4</td><td>________________</td><td>____</td><td>____</td><td>____</td><td>____</td><td>____</td></tr>
+Price Per Meter : <input id="price" value="220">
+
+<table id="table">
+
+<tr>
+
+<th>SI</th>
+<th>Roll No</th>
+<th>Meter</th>
+<th>Weight (Auto)</th>
+<th>Amount (Auto)</th>
+
+</tr>
+
+<tr>
+
+<td>1</td>
+<td><input></td>
+<td><input class="meter" onkeyup="calc()"></td>
+<td class="wt">0</td>
+<td class="amt">0</td>
+
+</tr>
+
+<tr>
+
+<td>2</td>
+<td><input></td>
+<td><input class="meter" onkeyup="calc()"></td>
+<td class="wt">0</td>
+<td class="amt">0</td>
+
+</tr>
+
+<tr>
+
+<td>3</td>
+<td><input class="meter" onkeyup="calc()"></td>
+<td class="wt">0</td>
+<td class="amt">0</td>
+
+</tr>
+
 </table>
 
-<div class="signature">Authorized Signature</div>
+<br>
 
-<p><strong>Remarks:</strong> Goods sent on consignment basis.</p>
-<p><strong>Terms & Conditions:</strong> Goods once delivered will not be taken back. Please check the material on delivery.</p>
+Total : <span id="total">0</span>
+
+<br>
+
+CGST 2.5% : <span id="cgst">0</span>
+
+<br>
+
+SGST 2.5% : <span id="sgst">0</span>
+
+<br>
+
+<h3>Grand Total : <span id="grand">0</span></h3>
+
+<script>
+
+document.getElementById("date").valueAsDate=new Date()
+
+document.getElementById("dc").value="LT/DC/"+Math.floor(Math.random()*1000)
+
+function calc(){
+
+let price=document.getElementById("price").value
+
+let meters=document.querySelectorAll(".meter")
+
+let wt=document.querySelectorAll(".wt")
+
+let amt=document.querySelectorAll(".amt")
+
+let total=0
+
+meters.forEach((m,i)=>{
+
+let meter=Number(m.value||0)
+
+let weight=meter*0.245
+
+let amount=meter*price
+
+wt[i].innerHTML=weight.toFixed(2)
+
+amt[i].innerHTML=amount.toFixed(2)
+
+total+=amount
+
+})
+
+document.getElementById("total").innerHTML=total
+
+let cgst=total*0.025
+
+let sgst=total*0.025
+
+let grand=total+cgst+sgst
+
+document.getElementById("cgst").innerHTML=cgst.toFixed(2)
+
+document.getElementById("sgst").innerHTML=sgst.toFixed(2)
+
+document.getElementById("grand").innerHTML=grand.toFixed(2)
+
+}
+
+</script>
 
 </body>
 </html>
