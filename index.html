@@ -3,23 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ERP Style Delivery Challan</title>
+<title>Modern ERP Delivery Challan</title>
 <style>
-body { font-family: Arial, sans-serif; margin: 20px; background: #f2f2f2; }
-header { display: flex; align-items: center; padding: 10px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom:15px; }
-header img { height: 60px; margin-right: 15px; }
-header .company-info { line-height: 1.2; }
-h2 { text-align: center; margin: 15px 0; }
-section { background: #fff; padding: 10px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-label { display:inline-block; width:130px; margin-top:5px; }
-input, button { padding:5px; margin-top:5px; }
-button { cursor:pointer; margin-right:5px; }
-table { width:100%; border-collapse:collapse; margin-top:10px; background:#fff;}
-th, td { border:1px solid #444; padding:8px; text-align:center;}
-th { background:#222; color:#fff;}
-tr:nth-child(even) { background:#f9f9f9;}
-.totalRow { font-weight:bold; background:#ddd;}
-.buttons { margin-top:10px;}
+body { font-family: Arial, sans-serif; margin:20px; background:#f4f6f8; }
+header { display:flex; align-items:center; padding:15px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.15); margin-bottom:20px; border-radius:8px;}
+header img { height:60px; margin-right:15px; }
+header .company-info { line-height:1.2; }
+h2 { text-align:center; margin-bottom:15px; color:#1e3a8a; }
+section { background:#fff; padding:15px; margin-bottom:15px; box-shadow:0 1px 5px rgba(0,0,0,0.1); border-radius:8px; }
+label { display:inline-block; width:140px; margin-top:5px; }
+input, button { padding:6px; margin-top:5px; border-radius:4px; border:1px solid #ccc; }
+button { cursor:pointer; background:#1e3a8a; color:#fff; border:none; transition:0.2s; }
+button:hover { background:#374ea0; }
+table { width:100%; border-collapse:collapse; margin-top:10px; background:#fff; border-radius:8px; overflow:hidden; }
+th, td { border:1px solid #444; padding:10px; text-align:center; }
+th { background:#1e3a8a; color:#fff; }
+tr:nth-child(even){ background:#f3f4f6; }
+tr.specialRow { background:#ffe6e6; font-weight:bold; }
+.totalRow { font-weight:bold; background:#e2e8f0; }
 </style>
 </head>
 <body>
@@ -36,7 +37,7 @@ GSTIN: 33ABCDE1234F1Z5
 <h2>Delivery Challan</h2>
 
 <section id="challan-info">
-<strong>Challan No:</strong> <span id="challanNo">0001</span> <br>
+<strong>Challan No:</strong> <span id="challanNo">0001</span><br>
 <strong>Date:</strong> <span id="challanDate">DD/MM/YYYY</span>
 </section>
 
@@ -59,24 +60,30 @@ GSTIN: 33ABCDE1234F1Z5
 <tr><th>#</th><th>Fabric / Quality</th><th>Rolls/Meter</th><th>Weight</th><th>GST %</th><th>Remove</th></tr>
 </thead>
 <tbody></tbody>
+<tfoot>
+<tr class="totalRow"><td colspan="2">Total</td><td id="totalRolls">0</td><td id="totalWeight">0</td><td>-</td><td>-</td></tr>
+</tfoot>
 </table>
-
-<section id="challan-display"></section>
 
 <div class="buttons">
 <button onclick="generateChallan()">Generate Challan</button>
 <button onclick="downloadPDF()">Download PDF</button>
 </div>
 
+<section id="challan-display"></section>
+
+<!-- Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <script>
-// Sample customer database
+// Customer database
 const customers = {
     "33AAAAA1111A1Z5": {name: "Kasthuri Textiles", address: "123 Textile Street, Mettukattupudur"},
     "33BBBBB2222B1Z5": {name: "LISMOUNT Traders", address: "456 Fabric Avenue, Chennai"}
 };
 
-// Auto-fill Name & Address by GST
+// Auto-fill customer info
 document.getElementById('customerGST').addEventListener('input', function(){
     const gst = this.value.trim();
     if(customers[gst]){
@@ -107,18 +114,18 @@ function addItem(){
 }
 
 function renderTable(){
-    const tbody=document.querySelector("#itemsTable tbody");
+    const tbody = document.querySelector("#itemsTable tbody");
     tbody.innerHTML="";
+    let totalRolls=0, totalWeight=0;
     items.forEach((item,index)=>{
-        const tr=document.createElement("tr");
-        tr.innerHTML=`<td>${index+1}</td>
-        <td>${item.quality}</td>
-        <td>${item.rolls}</td>
-        <td>${item.weight}</td>
-        <td>${item.gst}</td>
-        <td><button onclick="removeItem(${index})">X</button></td>`;
+        const tr = document.createElement("tr");
+        tr.innerHTML=`<td>${index+1}</td><td>${item.quality}</td><td>${item.rolls}</td><td>${item.weight}</td><td>${item.gst}</td><td><button onclick="removeItem(${index})">X</button></td>`;
         tbody.appendChild(tr);
+        totalRolls += item.rolls;
+        totalWeight += item.weight;
     });
+    document.getElementById('totalRolls').innerText = totalRolls;
+    document.getElementById('totalWeight').innerText = totalWeight;
 }
 
 function removeItem(index){
@@ -131,33 +138,34 @@ function generateChallan(){
     const address=document.getElementById('address').value.trim();
     const custGST=document.getElementById('customerGST').value.trim();
     if(!customer || !address || !custGST){ alert("Enter customer details"); return; }
-    let totalRolls=0,totalWeight=0;
-    let html=`<h3>Delivery Challan</h3>
+    let html=`<h3 style="color:#1e3a8a;">Delivery Challan</h3>
     <p><strong>Challan No:</strong> ${challanNumber}</p>
     <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
     <p><strong>Customer Name:</strong> ${customer}</p>
     <p><strong>Customer Address:</strong> ${address}</p>
     <p><strong>Customer GST:</strong> ${custGST}</p>
-    <table>
+    <table border="1" cellspacing="0" cellpadding="5" style="width:100%;border-collapse:collapse;">
     <tr><th>#</th><th>Fabric / Quality</th><th>Rolls/Meter</th><th>Weight</th><th>GST %</th></tr>`;
+    let totalRolls=0,totalWeight=0;
     items.forEach((item,index)=>{
         html+=`<tr><td>${index+1}</td><td>${item.quality}</td><td>${item.rolls}</td><td>${item.weight}</td><td>${item.gst}</td></tr>`;
-        totalRolls+=item.rolls;
-        totalWeight+=item.weight;
+        totalRolls+=item.rolls; totalWeight+=item.weight;
     });
-    html+=`<tr class="totalRow"><td colspan="2">Total</td><td>${totalRolls}</td><td>${totalWeight}</td><td>-</td></tr></table>`;
+    html+=`<tr style="font-weight:bold;background:#e2e8f0;"><td colspan="2">Total</td><td>${totalRolls}</td><td>${totalWeight}</td><td>-</td></tr></table>`;
     document.getElementById('challan-display').innerHTML=html;
 }
 
 function downloadPDF(){
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    doc.html(document.getElementById('challan-display'),{
-        callback:function(pdf){pdf.save(`Challan_${challanNumber}.pdf`);},
-        x:10,
-        y:10,
-        width:180,
-        windowWidth: document.body.scrollWidth
+    const doc = new jsPDF('p','pt','a4');
+    const challan = document.getElementById('challan-display');
+    html2canvas(challan).then(canvas=>{
+        const imgData = canvas.toDataURL('image/png');
+        const imgProps = doc.getImageProperties(imgData);
+        const pdfWidth = doc.internal.pageSize.getWidth() - 40;
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        doc.addImage(imgData,'PNG',20,20,pdfWidth,pdfHeight);
+        doc.save(`Challan_${challanNumber}.pdf`);
     });
 }
 </script>
