@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delivery Challan</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        color: #222;
+    }
+    .header, .footer {
+        width: 100%;
+        text-align: center;
+    }
+    .header-logo {
+        float: left;
+        width: 50%;
+    }
+    .header-logo img {
+        max-width: 120px;
+    }
+    .header-info {
+        float: right;
+        width: 50%;
+        text-align: right;
+    }
+    .clear { clear: both; }
+    h2 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .customer-info, .challan-info {
+        margin-top: 20px;
+        width: 100%;
+    }
+    .customer-info div, .challan-info div {
+        margin-bottom: 5px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    table, th, td {
+        border: 1px solid #444;
+    }
+    th, td {
+        padding: 8px;
+        text-align: center;
+    }
+    th {
+        background-color: #f0f0f0;
+    }
+    .totals {
+        margin-top: 20px;
+        width: 50%;
+        float: right;
+    }
+    .totals div {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+    }
+    .footer {
+        margin-top: 80px;
+        text-align: left;
+    }
+    .signature {
+        margin-top: 40px;
+        width: 40%;
+        float: right;
+        text-align: center;
+        border-top: 1px solid #000;
+        padding-top: 5px;
+    }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-logo">
+        <img src="logo.png" alt="Company Logo">
+        <div>ABC TEXTILES PVT. LTD.<br>123, Market Street, Chennai - 600 001<br>GSTIN: 33AAACXXXXX1Z9</div>
+    </div>
+    <div class="header-info">
+        <div>Challan No: DC-101</div>
+        <div>Date: 05/04/2024</div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<h2>DELIVERY CHALLAN</h2>
+
+<div class="customer-info">
+    <strong>Delivered To:</strong><br>
+    XYZ TRADERS<br>
+    456, Main Road,<br>
+    Coimbatore - 641 002<br>
+    Ph: 9876543210
+</div>
+
+<div class="challan-info">
+    <strong>Contact:</strong> Mr. Ramesh<br>
+    <strong>Mobile:</strong> 98765XXXXX
+</div>
+
+<table>
+    <tr>
+        <th>Sl. No.</th>
+        <th>Description of Fabric</th>
+        <th>Meters</th>
+        <th>Roll No.</th>
+        <th>Net Weight (kg)</th>
+        <th>Gross Weight (kg)</th>
+        <th>Amount (₹)</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Cotton Twill</td>
+        <td>500</td>
+        <td>R001</td>
+        <td>45.00</td>
+        <td>48.50</td>
+        <td>25,000.00</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Rayon Print</td>
+        <td>300</td>
+        <td>R002</td>
+        <td>30.00</td>
+        <td>32.50</td>
+        <td>18,000.00</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Poly Lycra</td>
+        <td>400</td>
+        <td>R003</td>
+        <td>38.00</td>
+        <td>40.80</td>
+        <td>22,000.00</td>
+    </tr>
+</table>
+
+<div class="totals">
+    <div><span>Subtotal:</span> <span>₹65,000.00</span></div>
+    <div><span>CGST @6%:</span> <span>₹3,900.00</span></div>
+    <div><span>SGST @6%:</span> <span>₹3,900.00</span></div>
+    <div style="font-weight:bold;"><span>Grand Total:</span> <span>₹72,800.00</span></div>
+</div>
+
+<div class="footer">
+    <div class="signature">Authorized Signature</div>
+    <div class="clear"></div>
+    <p><strong>Remarks:</strong> Goods sent on consignment basis.</p>
+    <p><strong>Terms & Conditions:</strong> Goods once delivered will not be taken back. Please check the material on delivery. Thank you for your business!</p>
+</div>
+
+</body>
+</html>
