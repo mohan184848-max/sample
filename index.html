@@ -3,8 +3,14 @@
 <head>
 <title>Lismount Delivery Challan</title>
 
-<style>
+<script>
+// 🔐 LOGIN CHECK
+if(localStorage.getItem("login")!=="yes"){
+window.location.href="login.html";
+}
+</script>
 
+<style>
 @page{ size:A4; margin:5mm; }
 
 *{
@@ -100,7 +106,6 @@ margin-top:30px;
 @media print{
 .buttons{ display:none; }
 }
-
 </style>
 
 </head>
@@ -177,6 +182,9 @@ GST NO : 33AALFL6261D1ZG
 <button onclick="saveChallan()">SAVE</button>
 <button onclick="viewHistory()">HISTORY</button>
 <button onclick="window.print()">PRINT</button>
+
+<!-- 🔐 LOGOUT -->
+<button onclick="logout()">LOGOUT</button>
 </div>
 
 <table class="totalbox">
@@ -191,14 +199,17 @@ GST NO : 33AALFL6261D1ZG
 
 <div class="signature">
 <br>FOR LISMOUNT TEX INDIA LLP<br><br><br>
-<br>
-<br>
-<br>
-<br>
+<br><br><br><br>
 AUTHORISED SIGNATORY
 </div>
 
 <script>
+
+// LOGOUT
+function logout(){
+localStorage.removeItem("login");
+window.location.href="login.html";
+}
 
 // AUTO DC
 let dc = localStorage.getItem("dcno") || 1;
@@ -324,7 +335,6 @@ DC:${c.dc} | DATE:${c.date} | TOTAL:${c.total}
 w.document.write(html)
 }
 
-// AUTO TEXTAREA HEIGHT
 document.addEventListener("input",function(e){
 if(e.target.tagName.toLowerCase()=="textarea"){
 e.target.style.height="auto"
