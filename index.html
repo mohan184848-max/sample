@@ -1,4 +1,3 @@
-JOBWORK ONLY
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,92 +5,100 @@ JOBWORK ONLY
 
 <style>
 
-@page{
-size:A4;
-margin:3mm;
-}
+@page{ size:A4; margin:5mm; }
 
 *{
-font-size:7px;
-font-family:calibri;
+font-size:10px;
+font-family:Calibri;
 text-transform:uppercase;
 box-sizing:border-box;
 }
 
-body{
-margin:15;
-}
+body{ margin:10px; }
 
 h1{
 text-align:center;
-font-size:10px;
-margin:5px;
+font-size:14px;
+margin:2px;
 }
 
 .company{
 text-align:center;
+margin-bottom:5px;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+}
+
+.jobwork{
+border:1px solid black;
+padding:3px 8px;
+font-weight:bold;
 }
 
 table{
 width:100%;
 border-collapse:collapse;
-table-layout:fixed;
-margin-top:3px;
+margin-top:5px;
+table-layout:auto;
 }
 
 table,th,td{
 border:1px solid black;
 }
 
+th{
+background:#eee;
+}
+
 th,td{
-padding:2px;
+padding:5px;
 text-align:center;
-word-wrap:break-word;
+vertical-align:middle;
 }
 
 input,textarea{
-width:80%;
+width:100%;
 border:none;
 outline:none;
-font-size:8px;
+font-size:10px;
+white-space:normal;
+word-break:break-word;
 }
 
 textarea{
 resize:none;
 overflow:hidden;
-min-height:10px;
+min-height:20px;
+line-height:1.2;
+}
+
+.buttons{
+text-align:center;
+margin-top:8px;
+}
+
+button{
+padding:5px 10px;
+margin:2px;
+cursor:pointer;
 }
 
 .totalbox{
-width:40%;
+width:45%;
 margin-left:auto;
-margin-top:5px;
+margin-top:10px;
 }
 
 .signature{
 text-align:right;
-margin-top:12px;
-}
-
-.buttons{
-margin-top:4px;
-}
-
-button{
-font-size:8px;
-padding:3px 6px;
+margin-top:30px;
 }
 
 @media print{
-
-.buttons{
-display:none;
-}
-
-button{
-display:none;
-}
-
+.buttons{ display:none; }
 }
 
 </style>
@@ -100,270 +107,227 @@ display:none;
 
 <body>
 
+<div class="header">
+<div></div>
+<div class="jobwork">JOB WORK ONLY</div>
+</div>
+
 <h1>LISMOUNT TEX INDIA LLP</h1>
 
 <div class="company">
-
-BUILDING NO./FLAT NO.: 1/250-D NALLAGOUNDAN PALAYAM<br>
-CHENGAPPALLI, TIRUPPUR, TAMIL NADU - 638812<br>
-GST NO : 33AALFL6261D1ZG
-
+TIRUPPUR, TAMIL NADU<br>
+GST: 33AALFL6261D1ZG
 </div>
 
 <h2 style="text-align:center">DELIVERY CHALLAN</h2>
 
 <table>
-
 <tr>
-<td><b>DC NO</b></td>
-<td><input></td>
-
-<td><b>DATE</b></td>
-<td><input type="date"></td>
+<td>DC NO</td>
+<td><input id="dcno"></td>
+<td>DATE</td>
+<td><input type="date" id="date"></td>
 </tr>
 
 <tr>
-<td><b>CUSTOMER NAME</b></td>
+<td>CUSTOMER</td>
 <td><input></td>
-
-<td><b>CUSTOMER GST</b></td>
+<td>GST</td>
 <td><input id="custgst" oninput="calculateTotals()"></td>
 </tr>
 
 <tr>
-<td><b>CUSTOMER ADDRESS</b></td>
+<td>ADDRESS</td>
 <td colspan="3"><textarea rows="2"></textarea></td>
 </tr>
-
 </table>
 
 <table id="rollTable">
-<tr>
-<br><br>
-<td><b>ITEM</b></td>
-<td colspan="6"><textarea rows="1"></textarea></td>
-</tr>
-<tr>
 
+<tr>
+<td>ITEM</td>
+<td colspan="6"><textarea></textarea></td>
+</tr>
+
+<tr>
 <th>SL</th>
-<th>ROLL NO</th>
-<th>METERS</th>
-<th>NET WEIGHT</th>
+<th>ROLL</th>
+<th>MTR</th>
+<th>WT</th>
 <th>PRICE</th>
-<th>AMOUNT</th>
-<th>ACTION</th>
-
+<th>AMT</th>
+<th>ACT</th>
 </tr>
 
 <tr>
-
 <td>1</td>
-
-<td><textarea rows="1"></textarea></td>
-
+<td><textarea></textarea></td>
 <td><input class="meters" type="number" oninput="calc(this)"></td>
-
 <td><input class="netwt" type="number" oninput="calculateTotals()"></td>
-
 <td><input class="price" type="number" oninput="calc(this)"></td>
-
 <td><input class="amount" readonly></td>
-
-<td><button onclick="deleteRow(this)">DELETE</button></td>
-
+<td><button onclick="deleteRow(this)">X</button></td>
 </tr>
 
 </table>
 
 <div class="buttons">
-
-<button onclick="addRow()">ADD ROLL</button>
-
+<button onclick="addRow()">+ ADD</button>
+<button onclick="saveChallan()">SAVE</button>
+<button onclick="viewHistory()">HISTORY</button>
 <button onclick="window.print()">PRINT</button>
-
 </div>
 
 <table class="totalbox">
-
-<tr>
-<td>TOTAL ROLLS</td>
-<td id="totalRolls">1</td>
-</tr>
-
-<tr>
-<br><br>
-<br><br>
-<td>TOTAL WEIGHT</td>
-<td id="totalWeight">0</td>
-</tr>
-
-<tr>
-<td>SUB TOTAL</td>
-<td id="subTotal">0</td>
-</tr>
-
-<tr>
-<td>CGST</td>
-<td id="cgst">0</td>
-</tr>
-
-<tr>
-<td>SGST</td>
-<td id="sgst">0</td>
-</tr>
-
-<tr>
-<td>IGST</td>
-<td id="igst">0</td>
-</tr>
-
-<tr>
-<td><b>GRAND TOTAL</b></td>
-<td id="grandTotal">0</td>
-</tr>
-
+<tr><td>TOTAL ROLLS</td><td id="totalRolls">1</td></tr>
+<tr><td>TOTAL WT</td><td id="totalWeight">0</td></tr>
+<tr><td>SUB TOTAL</td><td id="subTotal">0</td></tr>
+<tr><td>CGST</td><td id="cgst">0</td></tr>
+<tr><td>SGST</td><td id="sgst">0</td></tr>
+<tr><td>IGST</td><td id="igst">0</td></tr>
+<tr><td><b>GRAND</b></td><td id="grandTotal">0</td></tr>
 </table>
 
 <div class="signature">
-
-FOR LISMOUNT TEX INDIA LLP
-
-<br><br>
-<br><br>
-<br><br>
-
-AUTHORISED SIGNATORY
-
+FOR LISMOUNT TEX INDIA LLP<br><br><br>
+AUTH SIGN
 </div>
 
 <script>
 
+// AUTO DC
+let dc = localStorage.getItem("dcno") || 1;
+document.getElementById("dcno").value = dc;
+
+// AUTO DATE
+document.getElementById("date").valueAsDate = new Date();
+
+function saveDC(){
+localStorage.setItem("dcno", ++dc);
+}
+
 function calc(el){
-
 let row=el.parentElement.parentElement
-
-let meters=row.querySelector(".meters").value
-let price=row.querySelector(".price").value
-
-row.querySelector(".amount").value=meters*price||""
-
+let m=row.querySelector(".meters").value
+let p=row.querySelector(".price").value
+row.querySelector(".amount").value=m*p||""
 calculateTotals()
-
 }
 
 function addRow(){
+let t=document.getElementById("rollTable")
+let r=t.insertRow(t.rows.length)
 
-let table=document.getElementById("rollTable")
-
-let rowCount=table.rows.length
-
-let row=table.insertRow(rowCount)
-
-row.innerHTML=`
-
-<td>${rowCount}</td>
-
-<td><textarea rows="1"></textarea></td>
-
+r.innerHTML=`
+<td></td>
+<td><textarea></textarea></td>
 <td><input class="meters" type="number" oninput="calc(this)"></td>
-
 <td><input class="netwt" type="number" oninput="calculateTotals()"></td>
-
 <td><input class="price" type="number" oninput="calc(this)"></td>
-
 <td><input class="amount" readonly></td>
-
-<td><button onclick="deleteRow(this)">DELETE</button></td>
-
+<td><button onclick="deleteRow(this)">X</button></td>
 `
-
 updateSerial()
-
 }
 
 function deleteRow(btn){
-
 btn.parentElement.parentElement.remove()
-
 updateSerial()
-
 calculateTotals()
-
 }
 
 function updateSerial(){
-
-let table=document.getElementById("rollTable")
-
-for(let i=1;i<table.rows.length;i++){
-
-table.rows[i].cells[0].innerHTML=i
-
+let t=document.getElementById("rollTable")
+for(let i=2;i<t.rows.length;i++){
+t.rows[i].cells[0].innerHTML=i-1
 }
-
-document.getElementById("totalRolls").innerText=table.rows.length-1
-
+document.getElementById("totalRolls").innerText=t.rows.length-2
 }
 
 function calculateTotals(){
+let wt=document.querySelectorAll(".netwt")
+let amt=document.querySelectorAll(".amount")
 
-let netwt=document.querySelectorAll(".netwt")
+let tw=0, st=0
 
-let amount=document.querySelectorAll(".amount")
-
-let totalWeight=0
-
-let subTotal=0
-
-netwt.forEach(n=>{totalWeight+=Number(n.value)||0})
-
-amount.forEach(a=>{subTotal+=Number(a.value)||0})
+wt.forEach(n=>tw+=Number(n.value)||0)
+amt.forEach(a=>st+=Number(a.value)||0)
 
 let gst=document.getElementById("custgst").value
 
-let cgst=0
-let sgst=0
-let igst=0
+let cg=0, sg=0, ig=0
 
 if(gst.startsWith("33")){
-
-cgst=subTotal*0.025
-sgst=subTotal*0.025
-
+cg=st*0.025
+sg=st*0.025
 }else{
-
-igst=subTotal*0.05
-
+ig=st*0.05
 }
 
-document.getElementById("totalWeight").innerText=totalWeight.toFixed(2)
-
-document.getElementById("subTotal").innerText=subTotal.toFixed(2)
-
-document.getElementById("cgst").innerText=cgst.toFixed(2)
-
-document.getElementById("sgst").innerText=sgst.toFixed(2)
-
-document.getElementById("igst").innerText=igst.toFixed(2)
-
-document.getElementById("grandTotal").innerText=(subTotal+cgst+sgst+igst).toFixed(2)
-
+document.getElementById("totalWeight").innerText=tw.toFixed(2)
+document.getElementById("subTotal").innerText=st.toFixed(2)
+document.getElementById("cgst").innerText=cg.toFixed(2)
+document.getElementById("sgst").innerText=sg.toFixed(2)
+document.getElementById("igst").innerText=ig.toFixed(2)
+document.getElementById("grandTotal").innerText=(st+cg+sg+ig).toFixed(2)
 }
 
+function saveChallan(){
+
+let rows=document.querySelectorAll("#rollTable tr")
+let items=[]
+
+for(let i=2;i<rows.length;i++){
+let r=rows[i]
+items.push({
+roll:r.cells[1].querySelector("textarea").value,
+meters:r.querySelector(".meters").value,
+weight:r.querySelector(".netwt").value,
+price:r.querySelector(".price").value,
+amount:r.querySelector(".amount").value
+})
+}
+
+let data={
+dc:document.getElementById("dcno").value,
+date:document.getElementById("date").value,
+total:document.getElementById("grandTotal").innerText,
+items:items
+}
+
+let h=JSON.parse(localStorage.getItem("challans"))||[]
+h.push(data)
+localStorage.setItem("challans",JSON.stringify(h))
+
+alert("Saved ✅")
+saveDC()
+}
+
+function viewHistory(){
+
+let h=JSON.parse(localStorage.getItem("challans"))||[]
+let w=window.open("","","width=800,height=600")
+
+let html="<h2>HISTORY</h2>"
+
+h.forEach(c=>{
+html+=`<div style="border:1px solid;padding:5px;margin:5px;">
+DC:${c.dc} | DATE:${c.date} | TOTAL:${c.total}
+</div>`
+})
+
+w.document.write(html)
+}
+
+// AUTO TEXTAREA HEIGHT
 document.addEventListener("input",function(e){
-
 if(e.target.tagName.toLowerCase()=="textarea"){
-
 e.target.style.height="auto"
 e.target.style.height=e.target.scrollHeight+"px"
-
 }
-
 })
 
 </script>
 
 </body>
 </html>
-```
-
