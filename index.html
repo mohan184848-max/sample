@@ -3,14 +3,8 @@
 <head>
 <title>Lismount Delivery Challan</title>
 
-<script>
-// 🔐 LOGIN CHECK
-if(localStorage.getItem("login")!=="yes"){
-window.location.href="https://mohan184848-max.github.io/sample/";
-}
-</script>
-
 <style>
+
 @page{ size:A4; margin:5mm; }
 
 *{
@@ -106,6 +100,7 @@ margin-top:30px;
 @media print{
 .buttons{ display:none; }
 }
+
 </style>
 
 </head>
@@ -152,7 +147,7 @@ GST NO : 33AALFL6261D1ZG
 
 <tr>
 <td>ITEM</td>
-<td colspan="6"><textarea></textarea></td>
+<td colspan="6"><textarea></textarea></td> 
 </tr>
 
 <tr>
@@ -182,9 +177,6 @@ GST NO : 33AALFL6261D1ZG
 <button onclick="saveChallan()">SAVE</button>
 <button onclick="viewHistory()">HISTORY</button>
 <button onclick="window.print()">PRINT</button>
-
-<!-- 🔐 LOGOUT -->
-<button onclick="logout()">LOGOUT</button>
 </div>
 
 <table class="totalbox">
@@ -199,17 +191,14 @@ GST NO : 33AALFL6261D1ZG
 
 <div class="signature">
 <br>FOR LISMOUNT TEX INDIA LLP<br><br><br>
-<br><br><br><br>
+<br>
+<br>
+<br>
+<br>
 AUTHORISED SIGNATORY
 </div>
 
 <script>
-
-// LOGOUT
-function logout(){
-localStorage.removeItem("login");
-window.location.href="login.html";
-}
 
 // AUTO DC
 let dc = localStorage.getItem("dcno") || 1;
@@ -234,7 +223,7 @@ function addRow(){
 let t=document.getElementById("rollTable")
 let r=t.insertRow(t.rows.length)
 
-r.innerHTML=`
+r.innerHTML=
 <td></td>
 <td><textarea></textarea></td>
 <td><input class="meters" type="number" oninput="calc(this)"></td>
@@ -242,7 +231,7 @@ r.innerHTML=`
 <td><input class="price" type="number" oninput="calc(this)"></td>
 <td><input class="amount" readonly></td>
 <td><button onclick="deleteRow(this)">X</button></td>
-`
+
 updateSerial()
 }
 
@@ -327,14 +316,15 @@ let w=window.open("","","width=800,height=600")
 let html="<h2>HISTORY</h2>"
 
 h.forEach(c=>{
-html+=`<div style="border:1px solid;padding:5px;margin:5px;">
+html+=<div style="border:1px solid;padding:5px;margin:5px;">
 DC:${c.dc} | DATE:${c.date} | TOTAL:${c.total}
-</div>`
+</div>
 })
 
 w.document.write(html)
 }
 
+// AUTO TEXTAREA HEIGHT
 document.addEventListener("input",function(e){
 if(e.target.tagName.toLowerCase()=="textarea"){
 e.target.style.height="auto"
@@ -346,3 +336,4 @@ e.target.style.height=e.target.scrollHeight+"px"
 
 </body>
 </html>
+
