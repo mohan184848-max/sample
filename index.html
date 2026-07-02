@@ -72,6 +72,14 @@
             font-weight: 700;
         }
 
+        .card h3 {
+            color: #1e3c72;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            margin-top: 1.5rem;
+            font-weight: 700;
+        }
+
         /* Form Styling */
         .form-group {
             margin-bottom: 1.5rem;
@@ -216,28 +224,29 @@
             flex: none;
         }
 
-        .vehicle-input-group {
+        .master-input-group {
             display: flex;
             gap: 0.75rem;
             align-items: flex-end;
+            margin-bottom: 1.5rem;
         }
 
-        .vehicle-input-group .form-group {
+        .master-input-group .form-group {
             flex: 1;
             margin-bottom: 0;
         }
 
-        .vehicle-input-group button {
+        .master-input-group button {
             flex: none;
             padding: 0.875rem 1.5rem;
         }
 
-        /* Vehicle Master List */
-        .vehicle-list {
+        /* Master List */
+        .master-list {
             margin-top: 1.5rem;
         }
 
-        .vehicle-item {
+        .master-item {
             background: #f5f5f5;
             padding: 1rem;
             border-radius: 8px;
@@ -248,9 +257,19 @@
             border-left: 4px solid #2a5298;
         }
 
-        .vehicle-item-name {
+        .master-item-content {
+            flex: 1;
+        }
+
+        .master-item-name {
             font-weight: 600;
             color: #1e3c72;
+        }
+
+        .master-item-detail {
+            font-size: 0.85rem;
+            color: #666666;
+            margin-top: 0.25rem;
         }
 
         /* Stop Entry Section */
@@ -476,7 +495,7 @@
             .btn-group,
             .card .btn-group,
             .no-print,
-            .vehicle-input-group button {
+            .master-input-group button {
                 display: none !important;
             }
 
@@ -548,12 +567,12 @@
                 width: 100%;
             }
 
-            .vehicle-input-group {
+            .master-input-group {
                 flex-direction: column;
                 align-items: stretch;
             }
 
-            .vehicle-input-group button {
+            .master-input-group button {
                 width: 100%;
             }
 
@@ -644,17 +663,42 @@
 
     <div class="container">
         <main>
-            <!-- Vehicle Master Card -->
+            <!-- Master Data Card -->
             <div class="card">
-                <h2>🚗 Vehicle Master</h2>
-                <div class="vehicle-input-group">
+                <h2>📚 Master Data Management</h2>
+
+                <!-- Vehicle Master -->
+                <h3>🚗 Vehicle Number Master</h3>
+                <div class="master-input-group">
                     <div class="form-group">
                         <label for="newVehicleNumber">Add New Vehicle Number</label>
                         <input type="text" id="newVehicleNumber" placeholder="e.g., TR-01-AB-1234">
                     </div>
-                    <button class="btn-primary btn-small" onclick="addVehicleToMaster()">➕ Add Vehicle</button>
+                    <button class="btn-primary btn-small" onclick="addVehicleToMaster()">➕ Add</button>
                 </div>
-                <div class="vehicle-list" id="vehicleList"></div>
+                <div class="master-list" id="vehicleList"></div>
+
+                <!-- Driver Master -->
+                <h3>👤 Driver Name Master</h3>
+                <div class="master-input-group">
+                    <div class="form-group">
+                        <label for="newDriverName">Add New Driver Name</label>
+                        <input type="text" id="newDriverName" placeholder="e.g., John Doe">
+                    </div>
+                    <button class="btn-primary btn-small" onclick="addDriverToMaster()">➕ Add</button>
+                </div>
+                <div class="master-list" id="driverList"></div>
+
+                <!-- Location Master -->
+                <h3>📍 Location/Address Master</h3>
+                <div class="master-input-group">
+                    <div class="form-group">
+                        <label for="newLocationAddress">Add New Location/Address</label>
+                        <input type="text" id="newLocationAddress" placeholder="e.g., 123 Main Street, City">
+                    </div>
+                    <button class="btn-primary btn-small" onclick="addLocationToMaster()">➕ Add</button>
+                </div>
+                <div class="master-list" id="locationList"></div>
             </div>
 
             <!-- Vehicle Information Card -->
@@ -669,7 +713,9 @@
                     </div>
                     <div class="form-group">
                         <label for="driverName">Driver Name</label>
-                        <input type="text" id="driverName" placeholder="Enter driver's name">
+                        <select id="driverName">
+                            <option value="">-- Select Driver --</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="date">Date</label>
@@ -700,7 +746,9 @@
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
                     <div class="form-group">
                         <label for="stopLocation">Location/Address</label>
-                        <input type="text" id="stopLocation" placeholder="Enter stop location">
+                        <select id="stopLocation">
+                            <option value="">-- Select Location --</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="inTime">In Time</label>
@@ -800,8 +848,12 @@
     <script>
         let stops = [];
         let vehicleMaster = [];
+        let driverMaster = [];
+        let locationMaster = [];
         const STORAGE_KEY = 'vehicleMovementData';
         const VEHICLE_MASTER_KEY = 'vehicleMaster';
+        const DRIVER_MASTER_KEY = 'driverMaster';
+        const LOCATION_MASTER_KEY = 'locationMaster';
         const AUTO_SAVE_DELAY = 500;
         let autoSaveTimeout;
 
@@ -810,8 +862,8 @@
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('date').value = today;
             
-            // Load vehicle master first
-            loadVehicleMaster();
+            // Load all masters first
+            loadAllMasters();
             
             // Load saved data
             loadFromLocalStorage();
@@ -828,10 +880,21 @@
                     clearTimeout(autoSaveTimeout);
                     autoSaveTimeout = setTimeout(saveToLocalStorage, AUTO_SAVE_DELAY);
                 });
+                input.addEventListener('change', function() {
+                    clearTimeout(autoSaveTimeout);
+                    autoSaveTimeout = setTimeout(saveToLocalStorage, AUTO_SAVE_DELAY);
+                });
             });
         }
 
-        // Load Vehicle Master
+        // Load All Masters
+        function loadAllMasters() {
+            loadVehicleMaster();
+            loadDriverMaster();
+            loadLocationMaster();
+        }
+
+        // ===== VEHICLE MASTER =====
         function loadVehicleMaster() {
             const saved = localStorage.getItem(VEHICLE_MASTER_KEY);
             if (saved) {
@@ -841,7 +904,6 @@
             displayVehicleList();
         }
 
-        // Add vehicle to master
         function addVehicleToMaster() {
             const vehicleNumber = document.getElementById('newVehicleNumber').value.trim();
             
@@ -850,7 +912,6 @@
                 return;
             }
 
-            // Check if vehicle already exists
             if (vehicleMaster.includes(vehicleNumber)) {
                 alert('This vehicle number already exists');
                 return;
@@ -867,12 +928,10 @@
             showCopyNotification('Vehicle added to master!');
         }
 
-        // Save vehicle master to localStorage
         function saveVehicleMaster() {
             localStorage.setItem(VEHICLE_MASTER_KEY, JSON.stringify(vehicleMaster));
         }
 
-        // Update vehicle dropdown
         function updateVehicleDropdown() {
             const select = document.getElementById('vehicleName');
             const currentValue = select.value;
@@ -889,7 +948,6 @@
             select.value = currentValue;
         }
 
-        // Display vehicle list
         function displayVehicleList() {
             const vehicleList = document.getElementById('vehicleList');
             
@@ -901,33 +959,207 @@
             vehicleList.innerHTML = '';
             vehicleMaster.forEach(vehicle => {
                 const item = document.createElement('div');
-                item.className = 'vehicle-item';
+                item.className = 'master-item';
                 item.innerHTML = `
-                    <span class="vehicle-item-name">${vehicle}</span>
+                    <div class="master-item-content">
+                        <div class="master-item-name">${vehicle}</div>
+                    </div>
                     <button class="btn-danger btn-small" onclick="deleteVehicleFromMaster('${vehicle}')">🗑️ Delete</button>
                 `;
                 vehicleList.appendChild(item);
             });
         }
 
-        // Delete vehicle from master
         function deleteVehicleFromMaster(vehicle) {
             if (confirm(`Delete "${vehicle}" from vehicle master?`)) {
                 vehicleMaster = vehicleMaster.filter(v => v !== vehicle);
                 saveVehicleMaster();
                 updateVehicleDropdown();
                 displayVehicleList();
-                showCopyNotification('Vehicle deleted from master!');
+                showCopyNotification('Vehicle deleted!');
             }
         }
 
+        // ===== DRIVER MASTER =====
+        function loadDriverMaster() {
+            const saved = localStorage.getItem(DRIVER_MASTER_KEY);
+            if (saved) {
+                driverMaster = JSON.parse(saved);
+            }
+            updateDriverDropdown();
+            displayDriverList();
+        }
+
+        function addDriverToMaster() {
+            const driverName = document.getElementById('newDriverName').value.trim();
+            
+            if (!driverName) {
+                alert('Please enter a driver name');
+                return;
+            }
+
+            if (driverMaster.includes(driverName)) {
+                alert('This driver name already exists');
+                return;
+            }
+
+            driverMaster.push(driverName);
+            driverMaster.sort();
+            
+            document.getElementById('newDriverName').value = '';
+            
+            saveDriverMaster();
+            updateDriverDropdown();
+            displayDriverList();
+            showCopyNotification('Driver added to master!');
+        }
+
+        function saveDriverMaster() {
+            localStorage.setItem(DRIVER_MASTER_KEY, JSON.stringify(driverMaster));
+        }
+
+        function updateDriverDropdown() {
+            const select = document.getElementById('driverName');
+            const currentValue = select.value;
+            
+            select.innerHTML = '<option value="">-- Select Driver --</option>';
+            
+            driverMaster.forEach(driver => {
+                const option = document.createElement('option');
+                option.value = driver;
+                option.textContent = driver;
+                select.appendChild(option);
+            });
+
+            select.value = currentValue;
+        }
+
+        function displayDriverList() {
+            const driverList = document.getElementById('driverList');
+            
+            if (driverMaster.length === 0) {
+                driverList.innerHTML = '<p style="color: #666666; font-style: italic; padding: 1rem;">No drivers added yet</p>';
+                return;
+            }
+
+            driverList.innerHTML = '';
+            driverMaster.forEach(driver => {
+                const item = document.createElement('div');
+                item.className = 'master-item';
+                item.innerHTML = `
+                    <div class="master-item-content">
+                        <div class="master-item-name">${driver}</div>
+                    </div>
+                    <button class="btn-danger btn-small" onclick="deleteDriverFromMaster('${driver}')">🗑️ Delete</button>
+                `;
+                driverList.appendChild(item);
+            });
+        }
+
+        function deleteDriverFromMaster(driver) {
+            if (confirm(`Delete "${driver}" from driver master?`)) {
+                driverMaster = driverMaster.filter(d => d !== driver);
+                saveDriverMaster();
+                updateDriverDropdown();
+                displayDriverList();
+                showCopyNotification('Driver deleted!');
+            }
+        }
+
+        // ===== LOCATION MASTER =====
+        function loadLocationMaster() {
+            const saved = localStorage.getItem(LOCATION_MASTER_KEY);
+            if (saved) {
+                locationMaster = JSON.parse(saved);
+            }
+            updateLocationDropdown();
+            displayLocationList();
+        }
+
+        function addLocationToMaster() {
+            const location = document.getElementById('newLocationAddress').value.trim();
+            
+            if (!location) {
+                alert('Please enter a location/address');
+                return;
+            }
+
+            if (locationMaster.includes(location)) {
+                alert('This location already exists');
+                return;
+            }
+
+            locationMaster.push(location);
+            locationMaster.sort();
+            
+            document.getElementById('newLocationAddress').value = '';
+            
+            saveLocationMaster();
+            updateLocationDropdown();
+            displayLocationList();
+            showCopyNotification('Location added to master!');
+        }
+
+        function saveLocationMaster() {
+            localStorage.setItem(LOCATION_MASTER_KEY, JSON.stringify(locationMaster));
+        }
+
+        function updateLocationDropdown() {
+            const select = document.getElementById('stopLocation');
+            const currentValue = select.value;
+            
+            select.innerHTML = '<option value="">-- Select Location --</option>';
+            
+            locationMaster.forEach(location => {
+                const option = document.createElement('option');
+                option.value = location;
+                option.textContent = location;
+                select.appendChild(option);
+            });
+
+            select.value = currentValue;
+        }
+
+        function displayLocationList() {
+            const locationList = document.getElementById('locationList');
+            
+            if (locationMaster.length === 0) {
+                locationList.innerHTML = '<p style="color: #666666; font-style: italic; padding: 1rem;">No locations added yet</p>';
+                return;
+            }
+
+            locationList.innerHTML = '';
+            locationMaster.forEach(location => {
+                const item = document.createElement('div');
+                item.className = 'master-item';
+                item.innerHTML = `
+                    <div class="master-item-content">
+                        <div class="master-item-name">${location}</div>
+                    </div>
+                    <button class="btn-danger btn-small" onclick="deleteLocationFromMaster('${location}')">🗑️ Delete</button>
+                `;
+                locationList.appendChild(item);
+            });
+        }
+
+        function deleteLocationFromMaster(location) {
+            if (confirm(`Delete "${location}" from location master?`)) {
+                locationMaster = locationMaster.filter(l => l !== location);
+                saveLocationMaster();
+                updateLocationDropdown();
+                displayLocationList();
+                showCopyNotification('Location deleted!');
+            }
+        }
+
+        // ===== STOPS MANAGEMENT =====
         function addStop() {
-            const location = document.getElementById('stopLocation').value.trim();
+            const location = document.getElementById('stopLocation').value;
             const inTime = document.getElementById('inTime').value;
             const outTime = document.getElementById('outTime').value;
 
             if (!location || !inTime) {
-                alert('Please fill in Location and In Time');
+                alert('Please select Location and In Time');
                 return;
             }
 
@@ -1060,7 +1292,7 @@
 
         function getReportText() {
             const vehicleName = document.getElementById('vehicleName').value || 'N/A';
-            const driverName = document.getElementById('driverName').value.trim() || 'N/A';
+            const driverName = document.getElementById('driverName').value || 'N/A';
             const date = document.getElementById('date').value || 'N/A';
             const startingTime = document.getElementById('startingTime').value || 'N/A';
             const startingKM = parseFloat(document.getElementById('startingKM').value) || 0;
@@ -1134,7 +1366,7 @@
 
         function exportCSV() {
             const vehicleName = document.getElementById('vehicleName').value || 'N/A';
-            const driverName = document.getElementById('driverName').value.trim() || 'N/A';
+            const driverName = document.getElementById('driverName').value || 'N/A';
             const date = document.getElementById('date').value || 'N/A';
             const startingTime = document.getElementById('startingTime').value || 'N/A';
             const startingKM = parseFloat(document.getElementById('startingKM').value) || 0;
@@ -1179,7 +1411,7 @@
 
         function previewData() {
             const vehicleName = document.getElementById('vehicleName').value || 'N/A';
-            const driverName = document.getElementById('driverName').value.trim() || 'N/A';
+            const driverName = document.getElementById('driverName').value || 'N/A';
             const date = document.getElementById('date').value || 'N/A';
             const startingTime = document.getElementById('startingTime').value || 'N/A';
             const startingKM = parseFloat(document.getElementById('startingKM').value) || 0;
