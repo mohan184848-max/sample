@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehicle Movement Dashboard</title>
+    <title>Vehicle Movement Tracker</title>
     <style>
         * {
             margin: 0;
@@ -13,1124 +13,888 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
-            min-height: 100vh;
-            padding: 20px;
+            background-color: #f5f7fa;
+            color: #1a1a1a;
+            line-height: 1.6;
         }
 
+        /* Header Styling */
         header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
-            padding: 25px;
-            border-radius: 15px 15px 0 0;
-            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(30, 60, 114, 0.15);
+            text-align: center;
         }
 
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo {
-            font-size: 40px;
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .header-title h1 {
-            font-size: 28px;
+        header h1 {
+            font-size: 2rem;
             font-weight: 700;
-            margin-bottom: 5px;
+            letter-spacing: -0.5px;
         }
 
-        .header-title p {
-            font-size: 13px;
-            opacity: 0.9;
+        header p {
+            opacity: 0.95;
+            font-size: 0.95rem;
+            margin-top: 0.25rem;
         }
 
-        .header-date {
-            font-size: 14px;
-            opacity: 0.9;
-            font-weight: 500;
-        }
-
+        /* Container */
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
+            padding: 2rem 1rem;
         }
 
-        .dashboard-cards {
+        /* Main Content */
+        main {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            padding: 25px;
-            background: #f8f9fa;
-            border-bottom: 2px solid #e9ecef;
+            grid-template-columns: 1fr;
+            gap: 2rem;
         }
 
+        /* Cards */
         .card {
             background: white;
-            padding: 20px;
             border-radius: 12px;
+            padding: 2rem;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            border-left: 5px solid #667eea;
-            transition: all 0.3s ease;
+            border: 1px solid #e8ecf1;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-icon {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .card-label {
-            font-size: 12px;
-            color: #666;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-        }
-
-        .card-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: #667eea;
-        }
-
-        .content {
-            padding: 25px;
-        }
-
-        .form-section {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            border-left: 4px solid #667eea;
-        }
-
-        .form-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 15px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        .form-group {
+        .card h2 {
+            color: #1e3c72;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .form-group label {
-            font-size: 12px;
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            color: #2c3e50;
             font-weight: 600;
-            color: #555;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
+            margin-bottom: 0.6rem;
+            font-size: 0.95rem;
         }
 
-        .form-group input,
-        .form-group select {
-            padding: 10px 12px;
-            border: 2px solid #ddd;
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
             border-radius: 8px;
-            font-size: 13px;
+            font-size: 1rem;
+            color: #1a1a1a;
+            background-color: #ffffff;
             transition: all 0.3s ease;
-            background: white;
             font-family: inherit;
         }
 
-        .form-group input:focus,
-        .form-group select:focus {
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        input[type="time"]:focus,
+        input[type="number"]:focus,
+        textarea:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+            background-color: #ffffff;
         }
 
-        .form-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+        textarea {
+            resize: vertical;
+            min-height: 80px;
         }
 
+        /* Buttons */
         button {
-            padding: 11px 18px;
+            padding: 0.75rem 1.5rem;
             border: none;
             border-radius: 8px;
-            font-size: 13px;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            letter-spacing: 0.3px;
+            gap: 0.5rem;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #2a5298;
             color: white;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            background-color: #1e3c72;
+            box-shadow: 0 4px 12px rgba(42, 82, 152, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
         }
 
         .btn-success {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            background-color: #28a745;
             color: white;
-            box-shadow: 0 4px 12px rgba(17, 153, 142, 0.3);
         }
 
         .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(17, 153, 142, 0.4);
+            background-color: #218838;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
         }
 
         .btn-info {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background-color: #17a2b8;
             color: white;
-            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
         }
 
         .btn-info:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+            background-color: #138496;
         }
 
-        .btn-warning {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);
-        }
-
-        .btn-warning:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
-        }
-
-        .btn-delete {
-            background: #ffebee;
-            color: #c62828;
-            padding: 8px 12px;
-            font-size: 12px;
-            box-shadow: none;
-        }
-
-        .btn-delete:hover {
-            background: #ffcdd2;
-            transform: translateY(-2px);
-        }
-
-        .controls-section {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        .btn-group {
             display: flex;
-            gap: 12px;
+            gap: 1rem;
             flex-wrap: wrap;
-            align-items: center;
+            margin-top: 1.5rem;
         }
 
-        .search-box {
+        .btn-group button {
             flex: 1;
-            min-width: 250px;
-            position: relative;
+            min-width: 150px;
         }
 
-        .search-box input {
-            width: 100%;
-            padding: 12px 40px 12px 15px;
-            border: 2px solid #ddd;
+        /* Stop Entry Section */
+        .stop-entry {
+            background-color: #f8f9fa;
+            border-left: 4px solid #2a5298;
+            padding: 1.5rem;
             border-radius: 8px;
-            font-size: 13px;
-            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
         }
 
-        .search-box input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .search-box::before {
-            content: '🔍';
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 16px;
-        }
-
-        .table-section {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        thead {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 12px;
-            letter-spacing: 0.5px;
-        }
-
-        th {
-            padding: 16px 12px;
-            text-align: left;
-            border-bottom: 2px solid #667eea;
-        }
-
-        td {
-            padding: 14px 12px;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 13px;
-        }
-
-        tbody tr {
-            transition: all 0.3s ease;
-        }
-
-        tbody tr:nth-child(odd) {
-            background: #fafbfc;
-        }
-
-        tbody tr:nth-child(even) {
-            background: white;
-        }
-
-        tbody tr:hover {
-            background: linear-gradient(90deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
-        }
-
-        tbody tr.hidden {
-            display: none;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #999;
-        }
-
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-            opacity: 0.5;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.show {
-            display: flex;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 700px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: slideIn 0.3s ease;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-header {
+        .stop-entry-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 15px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
-        .modal-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #333;
+        .stop-entry-header h3 {
+            color: #1e3c72;
+            font-size: 1.1rem;
         }
 
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #999;
-            padding: 0;
-            width: 30px;
-            height: 30px;
+        /* Stops List */
+        .stops-list {
+            margin-top: 2rem;
+        }
+
+        .stop-item {
+            background-color: #f8f9fa;
+            border-left: 4px solid #28a745;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .stop-item-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
-        .modal-close:hover {
-            color: #333;
+        .stop-item-header h4 {
+            color: #1e3c72;
+            font-size: 1.05rem;
         }
 
-        .modal-text {
-            background: #f5f5f5;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            line-height: 1.9;
-            color: #333;
-            border-left: 4px solid #667eea;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            max-height: 450px;
-            overflow-y: auto;
+        .stop-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
-        .modal-actions {
+        .detail-row {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            justify-content: flex-end;
+            gap: 0.5rem;
+            align-items: center;
+            color: #2c3e50;
+            font-weight: 500;
         }
 
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        .detail-row span:first-child {
+            min-width: 40px;
+            font-size: 1.2rem;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            background: white;
+        }
+
+        th {
+            background-color: #1e3c72;
             color: white;
-            padding: 14px 20px;
-            border-radius: 8px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            animation: slideUp 0.3s ease;
-            z-index: 2000;
-            font-size: 13px;
+            padding: 1rem;
+            text-align: left;
             font-weight: 600;
-            max-width: 300px;
+            border: 1px solid #d1d5db;
         }
 
-        .toast.error {
-            background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+        td {
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
+            color: #1a1a1a;
         }
 
-        @keyframes slideUp {
-            from {
-                transform: translateY(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
         }
 
-        footer {
-            background: #f8f9fa;
-            padding: 20px;
+        tr:hover {
+            background-color: #f0f4f8;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .summary-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #2a5298;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .summary-item-label {
+            color: #6c757d;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-item-value {
+            color: #1e3c72;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* Empty State */
+        .empty-state {
             text-align: center;
-            color: #999;
-            font-size: 12px;
-            border-top: 1px solid #e0e0e0;
+            padding: 3rem 1rem;
+            color: #6c757d;
         }
 
+        .empty-state p {
+            font-size: 1rem;
+        }
+
+        /* Print Styles */
         @media print {
             body {
-                background: white;
-                padding: 0;
+                background-color: white;
             }
 
-            header,
-            .controls-section,
-            .form-section,
-            .dashboard-cards,
-            footer {
+            .btn-group,
+            .card .btn-group,
+            .no-print {
                 display: none !important;
             }
 
-            .container {
+            .card {
+                page-break-inside: avoid;
                 box-shadow: none;
-                border-radius: 0;
-                max-width: 100%;
-            }
-
-            .content {
-                padding: 10px;
+                border: 1px solid #ddd;
+                margin-bottom: 1rem;
             }
 
             table {
                 page-break-inside: avoid;
             }
 
-            tbody tr {
-                page-break-inside: avoid;
-            }
-
-            @page {
-                size: A4;
-                margin: 10mm;
+            header {
+                page-break-after: avoid;
             }
         }
 
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                text-align: center;
-                padding: 20px;
+            header h1 {
+                font-size: 1.5rem;
             }
 
-            .header-left {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .header-title h1 {
-                font-size: 20px;
-            }
-
-            .dashboard-cards {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-                padding: 15px;
+            .container {
+                padding: 1rem;
             }
 
             .card {
-                padding: 15px;
+                padding: 1.5rem;
             }
 
-            .card-value {
-                font-size: 24px;
+            .card h2 {
+                font-size: 1.1rem;
             }
 
-            .content {
-                padding: 15px;
+            main {
+                gap: 1.5rem;
             }
 
-            .form-grid {
+            .stop-entry,
+            .stop-item {
+                padding: 1rem;
+            }
+
+            .stop-details {
                 grid-template-columns: 1fr;
             }
 
-            .form-actions {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
                 flex-direction: column;
             }
 
-            .form-actions button {
+            .btn-group button {
                 width: 100%;
             }
 
-            .controls-section {
+            table {
+                font-size: 0.9rem;
+            }
+
+            th,
+            td {
+                padding: 0.6rem 0.5rem;
+            }
+
+            input[type="text"],
+            input[type="date"],
+            input[type="time"],
+            input[type="number"],
+            textarea {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+
+            .stop-item-header {
                 flex-direction: column;
-                align-items: stretch;
+                align-items: flex-start;
             }
 
-            .search-box {
-                min-width: 100%;
-            }
-
-            th, td {
-                padding: 10px 8px;
-                font-size: 12px;
-            }
-
-            .modal-content {
-                width: 95%;
-                padding: 20px;
-            }
-
-            .modal-text {
-                font-size: 12px;
+            .detail-row {
+                margin-bottom: 0.5rem;
             }
         }
 
         @media (max-width: 480px) {
-            header {
-                padding: 15px;
+            header h1 {
+                font-size: 1.2rem;
             }
 
-            .logo {
-                width: 50px;
-                height: 50px;
-                font-size: 28px;
+            header p {
+                font-size: 0.85rem;
             }
 
-            .header-title h1 {
-                font-size: 16px;
+            .card {
+                padding: 1rem;
             }
 
-            .dashboard-cards {
-                grid-template-columns: 1fr;
-                gap: 10px;
-                padding: 12px;
+            .card h2 {
+                font-size: 1rem;
+            }
+
+            label {
+                font-size: 0.9rem;
             }
 
             button {
-                padding: 10px 12px;
-                font-size: 12px;
+                padding: 0.6rem 1rem;
+                font-size: 0.95rem;
             }
 
-            th, td {
-                padding: 8px 6px;
-                font-size: 11px;
+            table {
+                font-size: 0.8rem;
             }
 
-            .modal-text {
-                font-size: 11px;
-                padding: 15px;
+            th,
+            td {
+                padding: 0.4rem 0.3rem;
             }
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .text-bold {
-            font-weight: 700;
         }
     </style>
 </head>
 <body>
-    <!-- HEADER -->
     <header>
-        <div class="header-left">
-            <div class="logo">🚛</div>
-            <div class="header-title">
-                <h1>Vehicle Movement Dashboard</h1>
-                <p>Professional Fleet Management System</p>
-            </div>
-        </div>
-        <div class="header-date" id="headerDate"></div>
+        <h1>🚚 Vehicle Movement Tracker</h1>
+        <p>Professional Fleet & Delivery Management System</p>
     </header>
 
-    <!-- MAIN CONTAINER -->
     <div class="container">
-        <!-- DASHBOARD CARDS -->
-        <div class="dashboard-cards">
+        <main>
+            <!-- Vehicle Information Card -->
             <div class="card">
-                <div class="card-icon">🚗</div>
-                <div class="card-label">Total Vehicles</div>
-                <div class="card-value" id="totalVehicles">0</div>
-            </div>
-
-            <div class="card">
-                <div class="card-icon">🛣️</div>
-                <div class="card-label">Total Trips</div>
-                <div class="card-value" id="totalTrips">0</div>
-            </div>
-
-            <div class="card">
-                <div class="card-icon">📏</div>
-                <div class="card-label">Total KM</div>
-                <div class="card-value" id="totalKM">0</div>
-            </div>
-
-            <div class="card">
-                <div class="card-icon">👨</div>
-                <div class="card-label">Total Drivers</div>
-                <div class="card-value" id="totalDrivers">0</div>
-            </div>
-        </div>
-
-        <!-- CONTENT -->
-        <div class="content">
-            <!-- ADD ENTRY FORM -->
-            <div class="form-section">
-                <div class="form-title">➕ Add New Entry</div>
-                <div class="form-grid">
+                <h2>📋 Vehicle Information</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
                     <div class="form-group">
-                        <label for="date">Date</label>
-                        <input type="date" id="date" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="inTime">In Time</label>
-                        <input type="time" id="inTime" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="outTime">Out Time</label>
-                        <input type="time" id="outTime" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="vehicleNumber">Vehicle Number</label>
-                        <input type="text" id="vehicleNumber" placeholder="e.g., ABC-123" required>
+                        <label for="vehicleName">Vehicle Name/Number</label>
+                        <input type="text" id="vehicleName" placeholder="e.g., TR-01-AB-1234">
                     </div>
                     <div class="form-group">
                         <label for="driverName">Driver Name</label>
-                        <input type="text" id="driverName" placeholder="Full Name" required>
+                        <input type="text" id="driverName" placeholder="Enter driver's name">
                     </div>
                     <div class="form-group">
-                        <label for="locationIn">Location In</label>
-                        <input type="text" id="locationIn" placeholder="Starting point" required>
+                        <label for="date">Date</label>
+                        <input type="date" id="date">
                     </div>
                     <div class="form-group">
-                        <label for="kmIn">KM In</label>
-                        <input type="number" id="kmIn" placeholder="0" step="0.1" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="locationOut">Location Out</label>
-                        <input type="text" id="locationOut" placeholder="Ending point" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="kmOut">KM Out</label>
-                        <input type="number" id="kmOut" placeholder="0" step="0.1" required>
+                        <label for="startingTime">Starting Time</label>
+                        <input type="time" id="startingTime">
                     </div>
                 </div>
-                <div class="form-actions">
-                    <button class="btn-primary" onclick="addEntry()">✅ Add Entry</button>
-                    <button class="btn-success" onclick="resetForm()">🔄 Clear Form</button>
+                <div class="form-group">
+                    <label for="remarks">Remarks</label>
+                    <textarea id="remarks" placeholder="Add any additional notes..."></textarea>
                 </div>
             </div>
 
-            <!-- CONTROLS SECTION -->
-            <div class="controls-section">
-                <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="Search by vehicle, driver, or location..." onkeyup="filterTable()">
+            <!-- Stop Entry Card -->
+            <div class="card">
+                <h2>🛑 Add Stop</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                    <div class="form-group">
+                        <label for="stopLocation">Location/Address</label>
+                        <input type="text" id="stopLocation" placeholder="Enter stop location">
+                    </div>
+                    <div class="form-group">
+                        <label for="inTime">In Time</label>
+                        <input type="time" id="inTime">
+                    </div>
+                    <div class="form-group">
+                        <label for="outTime">Out Time</label>
+                        <input type="time" id="outTime">
+                    </div>
+                    <div class="form-group">
+                        <label for="travelKM">Travel KM</label>
+                        <input type="number" id="travelKM" placeholder="0" step="0.01">
+                    </div>
                 </div>
-                <button class="btn-primary" onclick="printTable()">🖨️ Print</button>
-                <button class="btn-info" onclick="exportToCSV()">📊 Export CSV</button>
-                <button class="btn-warning" onclick="openWhatsAppModal()">💬 WhatsApp</button>
+                <div class="btn-group no-print">
+                    <button class="btn-success" onclick="addStop()">✅ Add Stop</button>
+                    <button class="btn-secondary" onclick="clearStopForm()">🗑️ Clear Form</button>
+                </div>
             </div>
 
-            <!-- TABLE SECTION -->
-            <div class="table-section">
-                <div class="table-wrapper">
-                    <table id="dataTable">
+            <!-- Stops Summary Card -->
+            <div class="card" id="stopsSummary" style="display: none;">
+                <h2>📍 Stops Summary</h2>
+                <div id="stopsList" class="stops-list"></div>
+                <div class="summary-section">
+                    <table>
                         <thead>
                             <tr>
-                                <th>S.No</th>
-                                <th>Date</th>
+                                <th>#</th>
+                                <th>Location</th>
                                 <th>In Time</th>
-                                <th>Vehicle #</th>
-                                <th>Driver Name</th>
-                                <th>Location In</th>
-                                <th>KM In</th>
                                 <th>Out Time</th>
-                                <th>Location Out</th>
-                                <th>KM Out</th>
-                                <th>Total KM</th>
+                                <th>Waiting Time</th>
+                                <th>Travel KM</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody id="tableBody">
-                            <tr class="empty-state">
-                                <td colspan="12">
-                                    <div class="empty-state-icon">📭</div>
-                                    <div>No entries yet. Add your first vehicle movement entry!</div>
-                                </td>
-                            </tr>
+                        <tbody id="stopsTable">
                         </tbody>
                     </table>
                 </div>
             </div>
-        </div>
 
-        <!-- FOOTER -->
-        <footer>
-            <p>© 2024 Vehicle Movement Dashboard | Data saved automatically | Last updated: <span id="lastUpdated">-</span></p>
-        </footer>
+            <!-- Summary Card -->
+            <div class="card" id="summaryCard" style="display: none;">
+                <h2>📊 Daily Summary</h2>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <div class="summary-item-label">Total Stops</div>
+                        <div class="summary-item-value" id="totalStops">0</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-item-label">Total KM</div>
+                        <div class="summary-item-value" id="totalKM">0</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-item-label">Total Waiting Time</div>
+                        <div class="summary-item-value" id="totalWaitingTime">0h 0m</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-item-label">Ending Time</div>
+                        <div class="summary-item-value" id="endingTime">--:--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions Card -->
+            <div class="card no-print">
+                <h2>⚙️ Actions</h2>
+                <div class="btn-group">
+                    <button class="btn-info" onclick="previewData()">👁️ Preview</button>
+                    <button class="btn-primary" onclick="shareWhatsApp()">📱 WhatsApp Share</button>
+                    <button class="btn-secondary" onclick="printData()">🖨️ Print</button>
+                    <button class="btn-success" onclick="saveToLocalStorage()">💾 Save</button>
+                    <button class="btn-danger" onclick="clearAllData()">🗑️ Clear All</button>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <!-- WHATSAPP MODAL -->
-    <div id="whatsappModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">💬 WhatsApp Share Format</div>
-                <button class="modal-close" onclick="closeWhatsAppModal()">✕</button>
+    <!-- Preview Modal -->
+    <div id="previewModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 1000; padding: 1rem;">
+        <div style="background: white; border-radius: 12px; max-width: 800px; margin: auto; max-height: 90vh; overflow-y: auto; padding: 2rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 style="color: #1e3c72;">📄 Preview</h2>
+                <button class="btn-secondary" onclick="closePreview()" style="padding: 0.5rem 1rem;">✕ Close</button>
             </div>
-            <div class="modal-text" id="whatsappText"></div>
-            <div class="modal-actions">
-                <button class="btn-primary" onclick="copyWhatsAppText()">📋 Copy & Share</button>
-                <button class="btn-success" onclick="closeWhatsAppModal()">✓ Close</button>
-            </div>
+            <div id="previewContent" style="color: #1a1a1a;"></div>
         </div>
     </div>
 
-    <!-- JAVASCRIPT -->
     <script>
-        const STORAGE_KEY = 'vehicleMovementData';
-        let allData = [];
-        let filteredData = [];
+        let stops = [];
 
+        // Initialize with date
         document.addEventListener('DOMContentLoaded', function() {
-            initializePage();
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').value = today;
+            loadFromLocalStorage();
         });
 
-        function initializePage() {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('date').value = today;
-            
-            document.getElementById('headerDate').textContent = new Date().toLocaleDateString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-
-            loadData();
-            renderTable();
-            updateDashboard();
-        }
-
-        function loadData() {
-            try {
-                const stored = localStorage.getItem(STORAGE_KEY);
-                allData = stored ? JSON.parse(stored) : [];
-                filteredData = [...allData];
-            } catch (error) {
-                console.error('Error loading data:', error);
-                allData = [];
-                filteredData = [];
-            }
-        }
-
-        function saveData() {
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(allData));
-                document.getElementById('lastUpdated').textContent = new Date().toLocaleTimeString();
-                showToast('✅ Data saved to local storage', 'success');
-            } catch (error) {
-                console.error('Error saving data:', error);
-                showToast('⚠️ Error saving data', 'error');
-            }
-        }
-
-        function addEntry() {
-            const date = document.getElementById('date').value;
+        function addStop() {
+            const location = document.getElementById('stopLocation').value.trim();
             const inTime = document.getElementById('inTime').value;
             const outTime = document.getElementById('outTime').value;
-            const vehicleNumber = document.getElementById('vehicleNumber').value.toUpperCase().trim();
-            const driverName = document.getElementById('driverName').value.trim();
-            const locationIn = document.getElementById('locationIn').value.trim();
-            const kmIn = parseFloat(document.getElementById('kmIn').value);
-            const locationOut = document.getElementById('locationOut').value.trim();
-            const kmOut = parseFloat(document.getElementById('kmOut').value);
+            const travelKM = parseFloat(document.getElementById('travelKM').value) || 0;
 
-            if (!date || !inTime || !outTime || !vehicleNumber || !driverName || !locationIn || !locationOut || isNaN(kmIn) || isNaN(kmOut)) {
-                showToast('⚠️ Please fill all fields', 'error');
+            if (!location || !inTime) {
+                alert('Please fill in Location and In Time');
                 return;
             }
 
-            if (kmOut < kmIn) {
-                showToast('⚠️ KM Out cannot be less than KM In', 'error');
-                return;
+            let waitingTime = 0;
+            if (outTime) {
+                waitingTime = calculateWaitingTime(inTime, outTime);
             }
 
-            const totalKm = (kmOut - kmIn).toFixed(1);
-
-            const entry = {
-                id: Date.now(),
-                date: date,
-                inTime: inTime,
-                outTime: outTime,
-                vehicleNumber: vehicleNumber,
-                driverName: driverName,
-                locationIn: locationIn,
-                kmIn: kmIn.toFixed(1),
-                locationOut: locationOut,
-                kmOut: kmOut.toFixed(1),
-                totalKm: totalKm
-            };
-
-            allData.unshift(entry);
-            filteredData = [...allData];
-
-            saveData();
-            renderTable();
-            updateDashboard();
-            resetForm();
-            showToast('✅ Entry added successfully!', 'success');
-        }
-
-        function deleteEntry(id) {
-            if (confirm('Are you sure you want to delete this entry?')) {
-                allData = allData.filter(item => item.id !== id);
-                filteredData = [...allData];
-                saveData();
-                renderTable();
-                updateDashboard();
-                showToast('🗑️ Entry deleted', 'success');
-            }
-        }
-
-        function resetForm() {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('date').value = today;
-            document.getElementById('inTime').value = '';
-            document.getElementById('outTime').value = '';
-            document.getElementById('vehicleNumber').value = '';
-            document.getElementById('driverName').value = '';
-            document.getElementById('locationIn').value = '';
-            document.getElementById('kmIn').value = '';
-            document.getElementById('locationOut').value = '';
-            document.getElementById('kmOut').value = '';
-        }
-
-        function renderTable() {
-            const tableBody = document.getElementById('tableBody');
-
-            if (filteredData.length === 0) {
-                tableBody.innerHTML = `
-                    <tr class="empty-state">
-                        <td colspan="12">
-                            <div class="empty-state-icon">📭</div>
-                            <div>No entries found. Add your first vehicle movement entry!</div>
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-
-            tableBody.innerHTML = filteredData.map((item, index) => `
-                <tr>
-                    <td class="text-bold">${index + 1}</td>
-                    <td>${formatDate(item.date)}</td>
-                    <td>${item.inTime}</td>
-                    <td class="text-bold">${item.vehicleNumber}</td>
-                    <td>${item.driverName}</td>
-                    <td>${item.locationIn}</td>
-                    <td>${item.kmIn}</td>
-                    <td>${item.outTime}</td>
-                    <td>${item.locationOut}</td>
-                    <td>${item.kmOut}</td>
-                    <td class="text-bold" style="color: #667eea;">${item.totalKm} KM</td>
-                    <td>
-                        <button class="btn-delete" onclick="deleteEntry(${item.id})">🗑️ Delete</button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function filterTable() {
-            const searchValue = document.getElementById('searchInput').value.toLowerCase();
-
-            if (searchValue === '') {
-                filteredData = [...allData];
-            } else {
-                filteredData = allData.filter(item =>
-                    item.vehicleNumber.toLowerCase().includes(searchValue) ||
-                    item.driverName.toLowerCase().includes(searchValue) ||
-                    item.locationIn.toLowerCase().includes(searchValue) ||
-                    item.locationOut.toLowerCase().includes(searchValue) ||
-                    item.date.includes(searchValue)
-                );
-            }
-
-            renderTable();
-        }
-
-        function updateDashboard() {
-            const uniqueVehicles = [...new Set(allData.map(item => item.vehicleNumber))];
-            document.getElementById('totalVehicles').textContent = uniqueVehicles.length;
-
-            document.getElementById('totalTrips').textContent = allData.length;
-
-            const totalKm = allData.reduce((sum, item) => sum + parseFloat(item.totalKm), 0).toFixed(1);
-            document.getElementById('totalKM').textContent = totalKm;
-
-            const uniqueDrivers = [...new Set(allData.map(item => item.driverName))];
-            document.getElementById('totalDrivers').textContent = uniqueDrivers.length;
-        }
-
-        function exportToCSV() {
-            if (allData.length === 0) {
-                showToast('⚠️ No data to export', 'error');
-                return;
-            }
-
-            let csvContent = 'S.No,Date,In Time,Out Time,Vehicle Number,Driver Name,Location In,KM In,Location Out,KM Out,Total KM\n';
-
-            allData.forEach((item, index) => {
-                csvContent += `${index + 1},"${item.date}","${item.inTime}","${item.outTime}","${item.vehicleNumber}","${item.driverName}","${item.locationIn}","${item.kmIn}","${item.locationOut}","${item.kmOut}","${item.totalKm}"\n`;
+            stops.push({
+                location,
+                inTime,
+                outTime,
+                waitingTime,
+                travelKM,
+                id: Date.now()
             });
 
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-
-            link.setAttribute('href', url);
-            link.setAttribute('download', `Vehicle_Movement_${new Date().toISOString().split('T')[0]}.csv`);
-            link.style.visibility = 'hidden';
-
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
-            showToast('📊 CSV exported successfully!', 'success');
+            updateStopsDisplay();
+            clearStopForm();
+            updateEndingTime();
+            saveToLocalStorage();
         }
 
-        function printTable() {
+        function calculateWaitingTime(inTime, outTime) {
+            const [inHour, inMin] = inTime.split(':').map(Number);
+            const [outHour, outMin] = outTime.split(':').map(Number);
+
+            let inMinutes = inHour * 60 + inMin;
+            let outMinutes = outHour * 60 + outMin;
+
+            if (outMinutes < inMinutes) {
+                outMinutes += 24 * 60;
+            }
+
+            return outMinutes - inMinutes;
+        }
+
+        function formatWaitingTime(minutes) {
+            const hours = Math.floor(minutes / 60);
+            const mins = minutes % 60;
+            return `${hours}h ${mins}m`;
+        }
+
+        function updateStopsDisplay() {
+            const stopsTable = document.getElementById('stopsTable');
+            const stopsList = document.getElementById('stopsList');
+            const summaryCard = document.getElementById('summaryCard');
+            const stopsSummary = document.getElementById('stopsSummary');
+
+            stopsTable.innerHTML = '';
+            stopsList.innerHTML = '';
+
+            stops.forEach((stop, index) => {
+                // Table Row
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${stop.location}</td>
+                    <td>${stop.inTime}</td>
+                    <td>${stop.outTime || '-'}</td>
+                    <td>${formatWaitingTime(stop.waitingTime)}</td>
+                    <td>${stop.travelKM.toFixed(2)}</td>
+                    <td><button class="btn-danger" onclick="deleteStop(${stop.id})" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">Delete</button></td>
+                `;
+                stopsTable.appendChild(row);
+
+                // Stop Item Card
+                const stopItem = document.createElement('div');
+                stopItem.className = 'stop-item';
+                stopItem.innerHTML = `
+                    <div class="stop-item-header">
+                        <h4>Stop ${index + 1}: ${stop.location}</h4>
+                        <button class="btn-danger" onclick="deleteStop(${stop.id})" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">Delete</button>
+                    </div>
+                    <div class="stop-details">
+                        <div class="detail-row"><span>🟢</span> In Time: <strong>${stop.inTime}</strong></div>
+                        <div class="detail-row"><span>🔴</span> Out Time: <strong>${stop.outTime || '-'}</strong></div>
+                        <div class="detail-row"><span>⏳</span> Waiting: <strong>${formatWaitingTime(stop.waitingTime)}</strong></div>
+                        <div class="detail-row"><span>📏</span> Travel KM: <strong>${stop.travelKM.toFixed(2)}</strong></div>
+                    </div>
+                `;
+                stopsList.appendChild(stopItem);
+            });
+
+            if (stops.length > 0) {
+                summaryCard.style.display = 'block';
+                stopsSummary.style.display = 'block';
+                updateSummary();
+            } else {
+                summaryCard.style.display = 'none';
+                stopsSummary.style.display = 'none';
+            }
+        }
+
+        function deleteStop(id) {
+            stops = stops.filter(s => s.id !== id);
+            updateStopsDisplay();
+            updateEndingTime();
+            saveToLocalStorage();
+        }
+
+        function clearStopForm() {
+            document.getElementById('stopLocation').value = '';
+            document.getElementById('inTime').value = '';
+            document.getElementById('outTime').value = '';
+            document.getElementById('travelKM').value = '';
+        }
+
+        function updateSummary() {
+            const totalStops = stops.length;
+            const totalKM = stops.reduce((sum, stop) => sum + stop.travelKM, 0);
+            const totalWaitingMinutes = stops.reduce((sum, stop) => sum + stop.waitingTime, 0);
+
+            document.getElementById('totalStops').textContent = totalStops;
+            document.getElementById('totalKM').textContent = totalKM.toFixed(2);
+            document.getElementById('totalWaitingTime').textContent = formatWaitingTime(totalWaitingMinutes);
+        }
+
+        function updateEndingTime() {
+            if (stops.length === 0) {
+                document.getElementById('endingTime').textContent = '--:--';
+                return;
+            }
+
+            const lastStop = stops[stops.length - 1];
+            const endTime = lastStop.outTime || lastStop.inTime;
+            document.getElementById('endingTime').textContent = endTime;
+        }
+
+        function shareWhatsApp() {
+            const vehicleName = document.getElementById('vehicleName').value.trim() || 'N/A';
+            const driverName = document.getElementById('driverName').value.trim() || 'N/A';
+            const date = document.getElementById('date').value || 'N/A';
+            const startingTime = document.getElementById('startingTime').value || 'N/A';
+
+            let message = `*🚚 Vehicle Movement Report*\n\n`;
+            message += `🚚 Vehicle: ${vehicleName}\n`;
+            message += `👤 Driver: ${driverName}\n`;
+            message += `📅 Date: ${date}\n`;
+            message += `🕒 Starting Time: ${startingTime}\n\n`;
+
+            message += `*📍 Stops Details:*\n`;
+            stops.forEach((stop, index) => {
+                message += `\n*Stop ${index + 1}: ${stop.location}*\n`;
+                message += `🟢 In Time: ${stop.inTime}\n`;
+                message += `🔴 Out Time: ${stop.outTime || '-'}\n`;
+                message += `⏳ Waiting Time: ${formatWaitingTime(stop.waitingTime)}\n`;
+                message += `📏 Travel KM: ${stop.travelKM.toFixed(2)}\n`;
+            });
+
+            const totalKM = stops.reduce((sum, stop) => sum + stop.travelKM, 0);
+            const lastStop = stops.length > 0 ? (stops[stops.length - 1].outTime || stops[stops.length - 1].inTime) : 'N/A';
+
+            message += `\n*📊 Summary:*\n`;
+            message += `📏 Total KM: ${totalKM.toFixed(2)}\n`;
+            message += `🏁 Ending Time: ${lastStop}\n`;
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = `https://wa.me/?text=${encodedMessage}`;
+            window.open(whatsappURL, '_blank');
+        }
+
+        function previewData() {
+            const vehicleName = document.getElementById('vehicleName').value.trim() || 'N/A';
+            const driverName = document.getElementById('driverName').value.trim() || 'N/A';
+            const date = document.getElementById('date').value || 'N/A';
+            const startingTime = document.getElementById('startingTime').value || 'N/A';
+            const remarks = document.getElementById('remarks').value.trim() || 'No remarks';
+
+            let preview = `
+                <div style="color: #1a1a1a; line-height: 1.8;">
+                    <h3 style="color: #1e3c72; margin-bottom: 1rem;">Vehicle Information</h3>
+                    <p><strong>🚚 Vehicle:</strong> ${vehicleName}</p>
+                    <p><strong>👤 Driver:</strong> ${driverName}</p>
+                    <p><strong>📅 Date:</strong> ${date}</p>
+                    <p><strong>🕒 Starting Time:</strong> ${startingTime}</p>
+                    <p><strong>📝 Remarks:</strong> ${remarks}</p>
+
+                    <h3 style="color: #1e3c72; margin-top: 2rem; margin-bottom: 1rem;">Stops</h3>
+            `;
+
+            if (stops.length === 0) {
+                preview += '<p style="color: #6c757d; font-style: italic;">No stops added yet</p>';
+            } else {
+                stops.forEach((stop, index) => {
+                    preview += `
+                        <div style="background: #f8f9fa; padding: 1rem; border-left: 4px solid #2a5298; margin-bottom: 1rem; border-radius: 4px;">
+                            <h4 style="color: #1e3c72; margin-bottom: 0.5rem;">Stop ${index + 1}: ${stop.location}</h4>
+                            <p><strong>🟢 In Time:</strong> ${stop.inTime}</p>
+                            <p><strong>🔴 Out Time:</strong> ${stop.outTime || 'N/A'}</p>
+                            <p><strong>⏳ Waiting Time:</strong> ${formatWaitingTime(stop.waitingTime)}</p>
+                            <p><strong>📏 Travel KM:</strong> ${stop.travelKM.toFixed(2)}</p>
+                        </div>
+                    `;
+                });
+
+                const totalKM = stops.reduce((sum, stop) => sum + stop.travelKM, 0);
+                const totalWaitingMinutes = stops.reduce((sum, stop) => sum + stop.waitingTime, 0);
+                const lastStop = stops[stops.length - 1].outTime || stops[stops.length - 1].inTime;
+
+                preview += `
+                    <h3 style="color: #1e3c72; margin-top: 2rem; margin-bottom: 1rem;">Summary</h3>
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px;">
+                        <p><strong>📏 Total KM:</strong> ${totalKM.toFixed(2)}</p>
+                        <p><strong>⏳ Total Waiting Time:</strong> ${formatWaitingTime(totalWaitingMinutes)}</p>
+                        <p><strong>🏁 Ending Time:</strong> ${lastStop}</p>
+                    </div>
+                `;
+            }
+
+            preview += '</div>';
+            document.getElementById('previewContent').innerHTML = preview;
+            document.getElementById('previewModal').style.display = 'block';
+        }
+
+        function closePreview() {
+            document.getElementById('previewModal').style.display = 'none';
+        }
+
+        function printData() {
             window.print();
         }
 
-        function openWhatsAppModal() {
-            if (allData.length === 0) {
-                showToast('⚠️ No data to share', 'error');
-                return;
+        function saveToLocalStorage() {
+            const data = {
+                vehicleName: document.getElementById('vehicleName').value,
+                driverName: document.getElementById('driverName').value,
+                date: document.getElementById('date').value,
+                startingTime: document.getElementById('startingTime').value,
+                remarks: document.getElementById('remarks').value,
+                stops: stops
+            };
+            localStorage.setItem('vehicleMovementData', JSON.stringify(data));
+        }
+
+        function loadFromLocalStorage() {
+            const savedData = localStorage.getItem('vehicleMovementData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                document.getElementById('vehicleName').value = data.vehicleName || '';
+                document.getElementById('driverName').value = data.driverName || '';
+                document.getElementById('date').value = data.date || '';
+                document.getElementById('startingTime').value = data.startingTime || '';
+                document.getElementById('remarks').value = data.remarks || '';
+                stops = data.stops || [];
+                updateStopsDisplay();
+                updateEndingTime();
             }
-
-            let whatsappText = '';
-            const today = new Date();
-            const dateStr = today.toLocaleDateString('ta-IN');
-            
-            whatsappText += '═══════════════════════════════════\n';
-            whatsappText += '🚛 *VEHICLE MOVEMENT REPORT*\n';
-            whatsappText += '═══════════════════════════════════\n';
-            whatsappText += `📅 Date: ${dateStr}\n`;
-            whatsappText += `⏰ Time: ${today.toLocaleTimeString()}\n\n`;
-
-            allData.forEach((item, index) => {
-                whatsappText += `┌─────────────────────────────────\n`;
-                whatsappText += `│ ${index + 1}️⃣ TRIP #${index + 1}\n`;
-                whatsappText += `├─────────────────────────────────\n`;
-                whatsappText += `│ 🚗 VEHICLE: ${item.vehicleNumber}\n`;
-                whatsappText += `│ 👨 DRIVER: ${item.driverName}\n`;
-                whatsappText += `├─────────────────────────────────\n`;
-                whatsappText += `│ ⏱️  IN TIME:  ${item.inTime}\n`;
-                whatsappText += `│ ⏱️  OUT TIME: ${item.outTime}\n`;
-                whatsappText += `├─────────────────────────────────\n`;
-                whatsappText += `│ 📍 FROM: ${item.locationIn}\n`;
-                whatsappText += `│    KM: ${item.kmIn}\n`;
-                whatsappText += `│\n`;
-                whatsappText += `│ 📍 TO:   ${item.locationOut}\n`;
-                whatsappText += `│    KM: ${item.kmOut}\n`;
-                whatsappText += `├─────────────────────────────────\n`;
-                whatsappText += `│ 🛣️  *TOTAL KM: ${item.totalKm} KM*\n`;
-                whatsappText += `└─────────────────────────────────\n\n`;
-            });
-
-            const totalTrips = allData.length;
-            const totalKm = allData.reduce((sum, item) => sum + parseFloat(item.totalKm), 0).toFixed(1);
-            const uniqueVehicles = [...new Set(allData.map(item => item.vehicleNumber))].length;
-            const uniqueDrivers = [...new Set(allData.map(item => item.driverName))].length;
-
-            whatsappText += '═══════════════════════════════════\n';
-            whatsappText += '📊 *SUMMARY*\n';
-            whatsappText += '═══════════════════════════════════\n';
-            whatsappText += `• 🛣️  Total Trips: ${totalTrips}\n`;
-            whatsappText += `• 📏 Total KM: ${totalKm}\n`;
-            whatsappText += `• 🚗 Vehicles: ${uniqueVehicles}\n`;
-            whatsappText += `• 👨 Drivers: ${uniqueDrivers}\n`;
-            whatsappText += `═══════════════════════════════════\n`;
-            whatsappText += `\n_Generated from Vehicle Movement Dashboard_\n`;
-            whatsappText += `_${today.toLocaleString()}_`;
-
-            document.getElementById('whatsappText').textContent = whatsappText;
-            document.getElementById('whatsappModal').classList.add('show');
         }
 
-        function closeWhatsAppModal() {
-            document.getElementById('whatsappModal').classList.remove('show');
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all data? This cannot be undone.')) {
+                document.getElementById('vehicleName').value = '';
+                document.getElementById('driverName').value = '';
+                document.getElementById('date').value = new Date().toISOString().split('T')[0];
+                document.getElementById('startingTime').value = '';
+                document.getElementById('remarks').value = '';
+                stops = [];
+                updateStopsDisplay();
+                updateEndingTime();
+                localStorage.removeItem('vehicleMovementData');
+            }
         }
 
-        function copyWhatsAppText() {
-            const text = document.getElementById('whatsappText').textContent;
-            navigator.clipboard.writeText(text).then(() => {
-                showToast('✅ Copied! Paste in WhatsApp', 'success');
-                setTimeout(() => closeWhatsAppModal(), 500);
-            }).catch(() => {
-                showToast('⚠️ Failed to copy', 'error');
-            });
-        }
-
-        function formatDate(dateString) {
-            const options = { year: 'numeric', month: 'short', day: 'numeric' };
-            return new Date(dateString).toLocaleDateString('en-US', options);
-        }
-
-        function showToast(message, type = 'success') {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.textContent = message;
-            document.body.appendChild(toast);
-
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
-        }
-
+        // Close modal when clicking outside
         window.onclick = function(event) {
-            const modal = document.getElementById('whatsappModal');
+            const modal = document.getElementById('previewModal');
             if (event.target === modal) {
-                closeWhatsAppModal();
+                modal.style.display = 'none';
             }
-        }
-
-        setInterval(() => {
-            if (allData.length > 0) {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(allData));
-            }
-        }, 30000);
+        };
     </script>
 </body>
 </html>
