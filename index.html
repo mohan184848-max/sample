@@ -605,6 +605,14 @@
                         <label for="startingTime">Starting Time</label>
                         <input type="time" id="startingTime">
                     </div>
+                    <div class="form-group">
+                        <label for="startingKM">Starting KM</label>
+                        <input type="number" id="startingKM" placeholder="0" step="0.01" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="endingKM">Ending KM</label>
+                        <input type="number" id="endingKM" placeholder="0" step="0.01" min="0">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="remarks">Remarks</label>
@@ -667,12 +675,24 @@
                 <h2>📊 Daily Summary</h2>
                 <div class="summary-grid">
                     <div class="summary-item">
+                        <div class="summary-item-label">Starting KM</div>
+                        <div class="summary-item-value" id="summaryStartingKM">0</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-item-label">Ending KM</div>
+                        <div class="summary-item-value" id="summaryEndingKM">0</div>
+                    </div>
+                    <div class="summary-item">
                         <div class="summary-item-label">Total Stops</div>
                         <div class="summary-item-value" id="totalStops">0</div>
                     </div>
                     <div class="summary-item">
                         <div class="summary-item-label">Total KM</div>
                         <div class="summary-item-value" id="totalKM">0</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-item-label">Verified Distance</div>
+                        <div class="summary-item-value" id="verifiedDistance">0</div>
                     </div>
                     <div class="summary-item">
                         <div class="summary-item-label">Total Waiting Time</div>
@@ -861,9 +881,16 @@
             const totalStops = stops.length;
             const totalKM = stops.reduce((sum, stop) => sum + stop.travelKM, 0);
             const totalWaitingMinutes = stops.reduce((sum, stop) => sum + stop.waitingTime, 0);
+            
+            const startingKM = parseFloat(document.getElementById('startingKM').value) || 0;
+            const endingKM = parseFloat(document.getElementById('endingKM').value) || 0;
+            const verifiedDistance = endingKM - startingKM;
 
+            document.getElementById('summaryStartingKM').textContent = startingKM.toFixed(2);
+            document.getElementById('summaryEndingKM').textContent = endingKM.toFixed(2);
             document.getElementById('totalStops').textContent = totalStops;
             document.getElementById('totalKM').textContent = totalKM.toFixed(2);
+            document.getElementById('verifiedDistance').textContent = verifiedDistance.toFixed(2);
             document.getElementById('totalWaitingTime').textContent = formatWaitingTime(totalWaitingMinutes);
         }
 
@@ -883,6 +910,8 @@
             const driverName = document.getElementById('driverName').value.trim() || 'N/A';
             const date = document.getElementById('date').value || 'N/A';
             const startingTime = document.getElementById('startingTime').value || 'N/A';
+            const startingKM = parseFloat(document.getElementById('startingKM').value) || 0;
+            const endingKM = parseFloat(document.getElementById('endingKM').value) || 0;
             const remarks = document.getElementById('remarks').value.trim() || 'No remarks';
 
             let report = `🚚 VEHICLE MOVEMENT REPORT\n\n`;
@@ -890,6 +919,8 @@
             report += `👤 Driver: ${driverName}\n`;
             report += `📅 Date: ${date}\n`;
             report += `🕒 Starting Time: ${startingTime}\n`;
+            report += `🔢 Starting KM: ${startingKM.toFixed(2)}\n`;
+            report += `🔢 Ending KM: ${endingKM.toFixed(2)}\n`;
             report += `📝 Remarks: ${remarks}\n\n`;
             report += `━━━━━━━━━━━━━━━━━━\n\n`;
 
@@ -909,10 +940,12 @@
                 const totalKM = stops.reduce((sum, stop) => sum + stop.travelKM, 0);
                 const totalWaitingMinutes = stops.reduce((sum, stop) => sum + stop.waitingTime, 0);
                 const lastStop = stops[stops.length - 1].outTime || stops[stops.length - 1].inTime;
+                const verifiedDistance = endingKM - startingKM;
 
                 report += `📊 SUMMARY\n\n`;
                 report += `📏 Total Stops: ${totalStops}\n`;
                 report += `📏 Total KM: ${totalKM.toFixed(2)}\n`;
+                report += `📏 Verified Distance: ${verifiedDistance.toFixed(2)}\n`;
                 report += `⏳ Total Waiting Time: ${formatWaitingTime(totalWaitingMinutes)}\n`;
                 report += `🏁 Ending Time: ${lastStop}\n`;
             } else {
@@ -954,10 +987,12 @@
             const driverName = document.getElementById('driverName').value.trim() || 'N/A';
             const date = document.getElementById('date').value || 'N/A';
             const startingTime = document.getElementById('startingTime').value || 'N/A';
+            const startingKM = parseFloat(document.getElementById('startingKM').value) || 0;
+            const endingKM = parseFloat(document.getElementById('endingKM').value) || 0;
 
             let csv = 'Vehicle Movement Report\n';
-            csv += `Vehicle,Driver,Date,Starting Time\n`;
-            csv += `"${vehicleName}","${driverName}","${date}","${startingTime}"\n\n`;
+            csv += `Vehicle,Driver,Date,Starting Time,Starting KM,Ending KM\n`;
+            csv += `"${vehicleName}","${driverName}","${date}","${startingTime}","${startingKM.toFixed(2)}","${endingKM.toFixed(2)}"\n\n`;
 
             csv += 'Stop Details\n';
             csv += 'Stop #,Location,In Time,Out Time,Waiting Time,Travel KM\n';
@@ -972,6 +1007,9 @@
 
             const totalKM = stops.reduce((sum, stop) => sum + stop.travelKM, 0);
             csv += `Total KM,${totalKM.toFixed(2)}\n`;
+
+            const verifiedDistance = endingKM - startingKM;
+            csv += `Verified Distance,${verifiedDistance.toFixed(2)}\n`;
 
             const totalWaitingMinutes = stops.reduce((sum, stop) => sum + stop.waitingTime, 0);
             csv += `Total Waiting Time,${formatWaitingTime(totalWaitingMinutes)}\n`;
@@ -997,6 +1035,8 @@
             const driverName = document.getElementById('driverName').value.trim() || 'N/A';
             const date = document.getElementById('date').value || 'N/A';
             const startingTime = document.getElementById('startingTime').value || 'N/A';
+            const startingKM = parseFloat(document.getElementById('startingKM').value) || 0;
+            const endingKM = parseFloat(document.getElementById('endingKM').value) || 0;
             const remarks = document.getElementById('remarks').value.trim() || 'No remarks';
 
             let preview = `
@@ -1005,6 +1045,8 @@
                 <p><strong>👤 Driver:</strong> ${driverName}</p>
                 <p><strong>📅 Date:</strong> ${date}</p>
                 <p><strong>🕒 Starting Time:</strong> ${startingTime}</p>
+                <p><strong>🔢 Starting KM:</strong> ${startingKM.toFixed(2)}</p>
+                <p><strong>🔢 Ending KM:</strong> ${endingKM.toFixed(2)}</p>
                 <p><strong>📝 Remarks:</strong> ${remarks}</p>
 
                 <h3 style="color: #1e3c72; margin-top: 2rem; margin-bottom: 1rem;">Stops</h3>
@@ -1028,12 +1070,14 @@
                 const totalKM = stops.reduce((sum, stop) => sum + stop.travelKM, 0);
                 const totalWaitingMinutes = stops.reduce((sum, stop) => sum + stop.waitingTime, 0);
                 const lastStop = stops[stops.length - 1].outTime || stops[stops.length - 1].inTime;
+                const verifiedDistance = endingKM - startingKM;
 
                 preview += `
                     <h3 style="color: #1e3c72; margin-top: 2rem; margin-bottom: 1rem;">Summary</h3>
                     <div style="background: #f5f5f5; padding: 1.5rem; border-radius: 8px;">
                         <p><strong>📏 Total Stops:</strong> ${stops.length}</p>
                         <p><strong>📏 Total KM:</strong> ${totalKM.toFixed(2)}</p>
+                        <p><strong>📏 Verified Distance:</strong> ${verifiedDistance.toFixed(2)}</p>
                         <p><strong>⏳ Total Waiting Time:</strong> ${formatWaitingTime(totalWaitingMinutes)}</p>
                         <p><strong>🏁 Ending Time:</strong> ${lastStop}</p>
                     </div>
@@ -1058,6 +1102,8 @@
                 driverName: document.getElementById('driverName').value,
                 date: document.getElementById('date').value,
                 startingTime: document.getElementById('startingTime').value,
+                startingKM: document.getElementById('startingKM').value,
+                endingKM: document.getElementById('endingKM').value,
                 remarks: document.getElementById('remarks').value,
                 stops: stops
             };
@@ -1073,6 +1119,8 @@
                     document.getElementById('driverName').value = data.driverName || '';
                     document.getElementById('date').value = data.date || '';
                     document.getElementById('startingTime').value = data.startingTime || '';
+                    document.getElementById('startingKM').value = data.startingKM || '';
+                    document.getElementById('endingKM').value = data.endingKM || '';
                     document.getElementById('remarks').value = data.remarks || '';
                     stops = data.stops || [];
                     updateStopsDisplay();
@@ -1089,6 +1137,8 @@
                 document.getElementById('driverName').value = '';
                 document.getElementById('date').value = new Date().toISOString().split('T')[0];
                 document.getElementById('startingTime').value = '';
+                document.getElementById('startingKM').value = '';
+                document.getElementById('endingKM').value = '';
                 document.getElementById('remarks').value = '';
                 stops = [];
                 updateStopsDisplay();
