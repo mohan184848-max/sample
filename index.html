@@ -80,6 +80,64 @@
             font-weight: 700;
         }
 
+        /* Collapsible Card */
+        .collapsible-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e0e0;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .collapsible-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1.5rem 2.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .collapsible-header:hover {
+            background: linear-gradient(135deg, #152d52 0%, #1e3c72 100%);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .collapsible-header span {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .collapsible-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .collapsible-icon.collapsed {
+            transform: rotate(-90deg);
+        }
+
+        .collapsible-content {
+            max-height: 2000px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            padding: 2.5rem;
+        }
+
+        .collapsible-content.collapsed {
+            max-height: 0;
+            padding: 0 2.5rem;
+            overflow: hidden;
+        }
+
         /* Form Styling */
         .form-group {
             margin-bottom: 1.5rem;
@@ -244,6 +302,7 @@
         /* Master List */
         .master-list {
             margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .master-item {
@@ -517,6 +576,10 @@
             .stop-item {
                 page-break-inside: avoid;
             }
+
+            .collapsible-card {
+                display: none;
+            }
         }
 
         /* Mobile Responsive */
@@ -540,6 +603,15 @@
             .card h2 {
                 font-size: 1.25rem;
                 margin-bottom: 1.5rem;
+            }
+
+            .collapsible-header {
+                padding: 1rem 1.5rem;
+                font-size: 1.2rem;
+            }
+
+            .collapsible-content {
+                padding: 1.5rem;
             }
 
             main {
@@ -652,6 +724,15 @@
             .summary-item-value {
                 font-size: 1.5rem;
             }
+
+            .collapsible-header {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+
+            .collapsible-content {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
@@ -663,42 +744,46 @@
 
     <div class="container">
         <main>
-            <!-- Master Data Card -->
-            <div class="card">
-                <h2>📚 Master Data Management</h2>
-
-                <!-- Vehicle Master -->
-                <h3>🚗 Vehicle Number Master</h3>
-                <div class="master-input-group">
-                    <div class="form-group">
-                        <label for="newVehicleNumber">Add New Vehicle Number</label>
-                        <input type="text" id="newVehicleNumber" placeholder="e.g., TR-01-AB-1234">
-                    </div>
-                    <button class="btn-primary btn-small" onclick="addVehicleToMaster()">➕ Add</button>
+            <!-- Master Data Card - Collapsible -->
+            <div class="collapsible-card">
+                <div class="collapsible-header" onclick="toggleMasterCollapse()">
+                    <span>📚 Master Data Management</span>
+                    <span class="collapsible-icon">▼</span>
                 </div>
-                <div class="master-list" id="vehicleList"></div>
-
-                <!-- Driver Master -->
-                <h3>👤 Driver Name Master</h3>
-                <div class="master-input-group">
-                    <div class="form-group">
-                        <label for="newDriverName">Add New Driver Name</label>
-                        <input type="text" id="newDriverName" placeholder="e.g., John Doe">
+                <div class="collapsible-content collapsed" id="masterContent">
+                    <!-- Vehicle Master -->
+                    <h3>🚗 Vehicle Number Master</h3>
+                    <div class="master-input-group">
+                        <div class="form-group">
+                            <label for="newVehicleNumber">Add New Vehicle Number</label>
+                            <input type="text" id="newVehicleNumber" placeholder="e.g., TR-01-AB-1234">
+                        </div>
+                        <button class="btn-primary btn-small" onclick="addVehicleToMaster()">➕ Add</button>
                     </div>
-                    <button class="btn-primary btn-small" onclick="addDriverToMaster()">➕ Add</button>
-                </div>
-                <div class="master-list" id="driverList"></div>
+                    <div class="master-list" id="vehicleList"></div>
 
-                <!-- Location Master -->
-                <h3>📍 Location/Address Master</h3>
-                <div class="master-input-group">
-                    <div class="form-group">
-                        <label for="newLocationAddress">Add New Location/Address</label>
-                        <input type="text" id="newLocationAddress" placeholder="e.g., 123 Main Street, City">
+                    <!-- Driver Master -->
+                    <h3>👤 Driver Name Master</h3>
+                    <div class="master-input-group">
+                        <div class="form-group">
+                            <label for="newDriverName">Add New Driver Name</label>
+                            <input type="text" id="newDriverName" placeholder="e.g., John Doe">
+                        </div>
+                        <button class="btn-primary btn-small" onclick="addDriverToMaster()">➕ Add</button>
                     </div>
-                    <button class="btn-primary btn-small" onclick="addLocationToMaster()">➕ Add</button>
+                    <div class="master-list" id="driverList"></div>
+
+                    <!-- Location Master -->
+                    <h3>📍 Location/Address Master</h3>
+                    <div class="master-input-group">
+                        <div class="form-group">
+                            <label for="newLocationAddress">Add New Location/Address</label>
+                            <input type="text" id="newLocationAddress" placeholder="e.g., 123 Main Street, City">
+                        </div>
+                        <button class="btn-primary btn-small" onclick="addLocationToMaster()">➕ Add</button>
+                    </div>
+                    <div class="master-list" id="locationList"></div>
                 </div>
-                <div class="master-list" id="locationList"></div>
             </div>
 
             <!-- Vehicle Information Card -->
@@ -872,6 +957,15 @@
             setupAutoSave();
         });
 
+        // Toggle Master Collapse
+        function toggleMasterCollapse() {
+            const masterContent = document.getElementById('masterContent');
+            const icon = document.querySelector('.collapsible-icon');
+            
+            masterContent.classList.toggle('collapsed');
+            icon.classList.toggle('collapsed');
+        }
+
         // Setup auto-save on all input changes
         function setupAutoSave() {
             const inputs = document.querySelectorAll('input[type="text"], input[type="date"], input[type="time"], input[type="number"], textarea, select');
@@ -964,7 +1058,7 @@
                     <div class="master-item-content">
                         <div class="master-item-name">${vehicle}</div>
                     </div>
-                    <button class="btn-danger btn-small" onclick="deleteVehicleFromMaster('${vehicle}')">🗑️ Delete</button>
+                    <button class="btn-danger btn-small" onclick="deleteVehicleFromMaster('${vehicle.replace(/'/g, "\\'")}')">🗑️ Delete</button>
                 `;
                 vehicleList.appendChild(item);
             });
@@ -1050,7 +1144,7 @@
                     <div class="master-item-content">
                         <div class="master-item-name">${driver}</div>
                     </div>
-                    <button class="btn-danger btn-small" onclick="deleteDriverFromMaster('${driver}')">🗑️ Delete</button>
+                    <button class="btn-danger btn-small" onclick="deleteDriverFromMaster('${driver.replace(/'/g, "\\'")}')">🗑️ Delete</button>
                 `;
                 driverList.appendChild(item);
             });
@@ -1136,7 +1230,7 @@
                     <div class="master-item-content">
                         <div class="master-item-name">${location}</div>
                     </div>
-                    <button class="btn-danger btn-small" onclick="deleteLocationFromMaster('${location}')">🗑️ Delete</button>
+                    <button class="btn-danger btn-small" onclick="deleteLocationFromMaster('${location.replace(/'/g, "\\'")}')">🗑️ Delete</button>
                 `;
                 locationList.appendChild(item);
             });
