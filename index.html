@@ -13,8 +13,8 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f7fa;
-            color: #1a1a1a;
+            background-color: #ffffff;
+            color: #000000;
             line-height: 1.6;
         }
 
@@ -22,21 +22,21 @@
         header {
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
-            padding: 1.5rem;
+            padding: 2rem 1.5rem;
             box-shadow: 0 4px 12px rgba(30, 60, 114, 0.15);
             text-align: center;
         }
 
         header h1 {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 700;
             letter-spacing: -0.5px;
         }
 
         header p {
             opacity: 0.95;
-            font-size: 0.95rem;
-            margin-top: 0.25rem;
+            font-size: 1rem;
+            margin-top: 0.5rem;
         }
 
         /* Container */
@@ -55,20 +55,21 @@
 
         /* Cards */
         .card {
-            background: white;
+            background: #ffffff;
             border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            border: 1px solid #e8ecf1;
+            padding: 2.5rem;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e0e0;
         }
 
         .card h2 {
             color: #1e3c72;
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            font-weight: 700;
         }
 
         /* Form Styling */
@@ -78,9 +79,9 @@
 
         label {
             display: block;
-            color: #2c3e50;
+            color: #000000;
             font-weight: 600;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.75rem;
             font-size: 0.95rem;
         }
 
@@ -90,14 +91,22 @@
         input[type="number"],
         textarea {
             width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid #d1d5db;
+            padding: 0.875rem 1rem;
+            border: 2px solid #d0d0d0;
             border-radius: 8px;
             font-size: 1rem;
-            color: #1a1a1a;
+            color: #000000;
             background-color: #ffffff;
             transition: all 0.3s ease;
             font-family: inherit;
+        }
+
+        input[type="text"]::placeholder,
+        input[type="date"]::placeholder,
+        input[type="time"]::placeholder,
+        input[type="number"]::placeholder,
+        textarea::placeholder {
+            color: #666666;
         }
 
         input[type="text"]:focus,
@@ -107,18 +116,18 @@
         textarea:focus {
             outline: none;
             border-color: #2a5298;
-            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.15);
             background-color: #ffffff;
         }
 
         textarea {
             resize: vertical;
-            min-height: 80px;
+            min-height: 100px;
         }
 
         /* Buttons */
         button {
-            padding: 0.75rem 1.5rem;
+            padding: 0.875rem 1.5rem;
             border: none;
             border-radius: 8px;
             font-size: 1rem;
@@ -127,6 +136,7 @@
             transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
         }
 
@@ -176,66 +186,63 @@
             background-color: #138496;
         }
 
+        .btn-warning {
+            background-color: #ffc107;
+            color: #000000;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
         .btn-group {
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
         }
 
         .btn-group button {
             flex: 1;
-            min-width: 150px;
+            min-width: 140px;
         }
 
         /* Stop Entry Section */
         .stop-entry {
-            background-color: #f8f9fa;
+            background-color: #f5f5f5;
             border-left: 4px solid #2a5298;
-            padding: 1.5rem;
+            padding: 2rem;
             border-radius: 8px;
-            margin-bottom: 1.5rem;
-        }
-
-        .stop-entry-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .stop-entry-header h3 {
-            color: #1e3c72;
-            font-size: 1.1rem;
+            margin-bottom: 2rem;
         }
 
         /* Stops List */
         .stops-list {
             margin-top: 2rem;
+            margin-bottom: 2rem;
         }
 
         .stop-item {
-            background-color: #f8f9fa;
+            background-color: #f5f5f5;
             border-left: 4px solid #28a745;
             padding: 1.5rem;
             border-radius: 8px;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .stop-item-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             flex-wrap: wrap;
             gap: 1rem;
         }
 
         .stop-item-header h4 {
             color: #1e3c72;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
+            font-weight: 700;
         }
 
         .stop-details {
@@ -247,9 +254,9 @@
 
         .detail-row {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.75rem;
             align-items: center;
-            color: #2c3e50;
+            color: #000000;
             font-weight: 500;
         }
 
@@ -258,11 +265,15 @@
             font-size: 1.2rem;
         }
 
+        .detail-row strong {
+            color: #000000;
+        }
+
         /* Table */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
             background: white;
         }
 
@@ -271,29 +282,29 @@
             color: white;
             padding: 1rem;
             text-align: left;
-            font-weight: 600;
-            border: 1px solid #d1d5db;
+            font-weight: 700;
+            border: 1px solid #1e3c72;
         }
 
         td {
-            padding: 0.75rem 1rem;
-            border: 1px solid #d1d5db;
-            color: #1a1a1a;
+            padding: 1rem;
+            border: 1px solid #e0e0e0;
+            color: #000000;
         }
 
         tr:nth-child(even) {
-            background-color: #f8f9fa;
+            background-color: #f9f9f9;
         }
 
         tr:hover {
-            background-color: #f0f4f8;
+            background-color: #f0f5ff;
         }
 
         /* Summary Section */
         .summary-section {
-            background-color: #f8f9fa;
+            background-color: #f5f5f5;
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 2rem;
             margin-top: 2rem;
         }
 
@@ -301,7 +312,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
         .summary-item {
@@ -313,17 +324,17 @@
         }
 
         .summary-item-label {
-            color: #6c757d;
+            color: #666666;
             font-size: 0.85rem;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
         }
 
         .summary-item-value {
             color: #1e3c72;
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             font-weight: 700;
         }
 
@@ -331,11 +342,81 @@
         .empty-state {
             text-align: center;
             padding: 3rem 1rem;
-            color: #6c757d;
+            color: #666666;
         }
 
         .empty-state p {
             font-size: 1rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 800px;
+            margin: auto;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-header h2 {
+            color: #1e3c72;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .modal-header button {
+            padding: 0.5rem 1rem;
+        }
+
+        .modal-body {
+            color: #000000;
+            line-height: 1.8;
+        }
+
+        .copy-notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #28a745;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1001;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         /* Print Styles */
@@ -354,7 +435,7 @@
                 page-break-inside: avoid;
                 box-shadow: none;
                 border: 1px solid #ddd;
-                margin-bottom: 1rem;
+                margin-bottom: 1.5rem;
             }
 
             table {
@@ -364,12 +445,20 @@
             header {
                 page-break-after: avoid;
             }
+
+            .stop-item {
+                page-break-inside: avoid;
+            }
         }
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
             header h1 {
-                font-size: 1.5rem;
+                font-size: 1.75rem;
+            }
+
+            header p {
+                font-size: 0.9rem;
             }
 
             .container {
@@ -381,7 +470,8 @@
             }
 
             .card h2 {
-                font-size: 1.1rem;
+                font-size: 1.25rem;
+                margin-bottom: 1.5rem;
             }
 
             main {
@@ -415,7 +505,7 @@
 
             th,
             td {
-                padding: 0.6rem 0.5rem;
+                padding: 0.75rem 0.5rem;
             }
 
             input[type="text"],
@@ -423,7 +513,7 @@
             input[type="time"],
             input[type="number"],
             textarea {
-                font-size: 16px; /* Prevents zoom on iOS */
+                font-size: 16px;
             }
 
             .stop-item-header {
@@ -434,15 +524,25 @@
             .detail-row {
                 margin-bottom: 0.5rem;
             }
+
+            .modal-content {
+                padding: 1.5rem;
+            }
+
+            .copy-notification {
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
+            }
         }
 
         @media (max-width: 480px) {
             header h1 {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
 
             header p {
-                font-size: 0.85rem;
+                font-size: 0.8rem;
             }
 
             .card {
@@ -450,7 +550,7 @@
             }
 
             .card h2 {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
 
             label {
@@ -458,8 +558,8 @@
             }
 
             button {
-                padding: 0.6rem 1rem;
-                font-size: 0.95rem;
+                padding: 0.7rem 1rem;
+                font-size: 0.9rem;
             }
 
             table {
@@ -468,7 +568,11 @@
 
             th,
             td {
-                padding: 0.4rem 0.3rem;
+                padding: 0.5rem 0.3rem;
+            }
+
+            .summary-item-value {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -486,7 +590,7 @@
                 <h2>📋 Vehicle Information</h2>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
                     <div class="form-group">
-                        <label for="vehicleName">Vehicle Name/Number</label>
+                        <label for="vehicleName">Vehicle Number</label>
                         <input type="text" id="vehicleName" placeholder="e.g., TR-01-AB-1234">
                     </div>
                     <div class="form-group">
@@ -526,7 +630,7 @@
                     </div>
                     <div class="form-group">
                         <label for="travelKM">Travel KM</label>
-                        <input type="number" id="travelKM" placeholder="0" step="0.01">
+                        <input type="number" id="travelKM" placeholder="0" step="0.01" min="0">
                     </div>
                 </div>
                 <div class="btn-group no-print">
@@ -543,13 +647,13 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th style="width: 40px;">#</th>
                                 <th>Location</th>
                                 <th>In Time</th>
                                 <th>Out Time</th>
                                 <th>Waiting Time</th>
                                 <th>Travel KM</th>
-                                <th>Action</th>
+                                <th style="width: 80px;">Action</th>
                             </tr>
                         </thead>
                         <tbody id="stopsTable">
@@ -587,6 +691,8 @@
                 <div class="btn-group">
                     <button class="btn-info" onclick="previewData()">👁️ Preview</button>
                     <button class="btn-primary" onclick="shareWhatsApp()">📱 WhatsApp Share</button>
+                    <button class="btn-warning" onclick="copyReport()">📋 Copy Report</button>
+                    <button class="btn-secondary" onclick="exportCSV()">📊 Export CSV</button>
                     <button class="btn-secondary" onclick="printData()">🖨️ Print</button>
                     <button class="btn-success" onclick="saveToLocalStorage()">💾 Save</button>
                     <button class="btn-danger" onclick="clearAllData()">🗑️ Clear All</button>
@@ -596,25 +702,44 @@
     </div>
 
     <!-- Preview Modal -->
-    <div id="previewModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 1000; padding: 1rem;">
-        <div style="background: white; border-radius: 12px; max-width: 800px; margin: auto; max-height: 90vh; overflow-y: auto; padding: 2rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <h2 style="color: #1e3c72;">📄 Preview</h2>
-                <button class="btn-secondary" onclick="closePreview()" style="padding: 0.5rem 1rem;">✕ Close</button>
+    <div id="previewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📄 Preview</h2>
+                <button class="btn-secondary" onclick="closePreview()">✕ Close</button>
             </div>
-            <div id="previewContent" style="color: #1a1a1a;"></div>
+            <div id="previewContent" class="modal-body"></div>
         </div>
     </div>
 
     <script>
         let stops = [];
+        const STORAGE_KEY = 'vehicleMovementData';
+        const AUTO_SAVE_DELAY = 500;
+        let autoSaveTimeout;
 
-        // Initialize with date
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('date').value = today;
+            
+            // Load saved data
             loadFromLocalStorage();
+            
+            // Set up auto-save on input changes
+            setupAutoSave();
         });
+
+        // Setup auto-save on all input changes
+        function setupAutoSave() {
+            const inputs = document.querySelectorAll('input[type="text"], input[type="date"], input[type="time"], input[type="number"], textarea');
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    clearTimeout(autoSaveTimeout);
+                    autoSaveTimeout = setTimeout(saveToLocalStorage, AUTO_SAVE_DELAY);
+                });
+            });
+        }
 
         function addStop() {
             const location = document.getElementById('stopLocation').value.trim();
@@ -753,37 +878,118 @@
             document.getElementById('endingTime').textContent = endTime;
         }
 
+        function getReportText() {
+            const vehicleName = document.getElementById('vehicleName').value.trim() || 'N/A';
+            const driverName = document.getElementById('driverName').value.trim() || 'N/A';
+            const date = document.getElementById('date').value || 'N/A';
+            const startingTime = document.getElementById('startingTime').value || 'N/A';
+            const remarks = document.getElementById('remarks').value.trim() || 'No remarks';
+
+            let report = `🚚 VEHICLE MOVEMENT REPORT\n\n`;
+            report += `🚛 Vehicle: ${vehicleName}\n`;
+            report += `👤 Driver: ${driverName}\n`;
+            report += `📅 Date: ${date}\n`;
+            report += `🕒 Starting Time: ${startingTime}\n`;
+            report += `📝 Remarks: ${remarks}\n\n`;
+            report += `━━━━━━━━━━━━━━━━━━\n\n`;
+
+            if (stops.length > 0) {
+                stops.forEach((stop, index) => {
+                    report += `Stop ${index + 1}\n`;
+                    report += `📍 Location: ${stop.location}\n`;
+                    report += `🟢 In Time: ${stop.inTime}\n`;
+                    report += `🔴 Out Time: ${stop.outTime || '-'}\n`;
+                    report += `⏳ Waiting Time: ${formatWaitingTime(stop.waitingTime)}\n`;
+                    report += `📏 Travel KM: ${stop.travelKM.toFixed(2)}\n\n`;
+                });
+
+                report += `━━━━━━━━━━━━━━━━━━\n\n`;
+
+                const totalStops = stops.length;
+                const totalKM = stops.reduce((sum, stop) => sum + stop.travelKM, 0);
+                const totalWaitingMinutes = stops.reduce((sum, stop) => sum + stop.waitingTime, 0);
+                const lastStop = stops[stops.length - 1].outTime || stops[stops.length - 1].inTime;
+
+                report += `📊 SUMMARY\n\n`;
+                report += `📏 Total Stops: ${totalStops}\n`;
+                report += `📏 Total KM: ${totalKM.toFixed(2)}\n`;
+                report += `⏳ Total Waiting Time: ${formatWaitingTime(totalWaitingMinutes)}\n`;
+                report += `🏁 Ending Time: ${lastStop}\n`;
+            } else {
+                report += `No stops added yet\n`;
+            }
+
+            return report;
+        }
+
         function shareWhatsApp() {
+            const report = getReportText();
+            const encodedMessage = encodeURIComponent(report);
+            const whatsappURL = `https://wa.me/?text=${encodedMessage}`;
+            window.open(whatsappURL, '_blank');
+        }
+
+        function copyReport() {
+            const report = getReportText();
+            navigator.clipboard.writeText(report).then(() => {
+                showCopyNotification('Report copied to clipboard!');
+            }).catch(() => {
+                alert('Failed to copy report');
+            });
+        }
+
+        function showCopyNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'copy-notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function exportCSV() {
             const vehicleName = document.getElementById('vehicleName').value.trim() || 'N/A';
             const driverName = document.getElementById('driverName').value.trim() || 'N/A';
             const date = document.getElementById('date').value || 'N/A';
             const startingTime = document.getElementById('startingTime').value || 'N/A';
 
-            let message = `*🚚 Vehicle Movement Report*\n\n`;
-            message += `🚚 Vehicle: ${vehicleName}\n`;
-            message += `👤 Driver: ${driverName}\n`;
-            message += `📅 Date: ${date}\n`;
-            message += `🕒 Starting Time: ${startingTime}\n\n`;
+            let csv = 'Vehicle Movement Report\n';
+            csv += `Vehicle,Driver,Date,Starting Time\n`;
+            csv += `"${vehicleName}","${driverName}","${date}","${startingTime}"\n\n`;
 
-            message += `*📍 Stops Details:*\n`;
+            csv += 'Stop Details\n';
+            csv += 'Stop #,Location,In Time,Out Time,Waiting Time,Travel KM\n';
+
             stops.forEach((stop, index) => {
-                message += `\n*Stop ${index + 1}: ${stop.location}*\n`;
-                message += `🟢 In Time: ${stop.inTime}\n`;
-                message += `🔴 Out Time: ${stop.outTime || '-'}\n`;
-                message += `⏳ Waiting Time: ${formatWaitingTime(stop.waitingTime)}\n`;
-                message += `📏 Travel KM: ${stop.travelKM.toFixed(2)}\n`;
+                csv += `${index + 1},"${stop.location}","${stop.inTime}","${stop.outTime || '-'}","${formatWaitingTime(stop.waitingTime)}",${stop.travelKM.toFixed(2)}\n`;
             });
 
+            csv += '\nSummary\n';
+            csv += 'Metric,Value\n';
+            csv += `Total Stops,${stops.length}\n`;
+
             const totalKM = stops.reduce((sum, stop) => sum + stop.travelKM, 0);
-            const lastStop = stops.length > 0 ? (stops[stops.length - 1].outTime || stops[stops.length - 1].inTime) : 'N/A';
+            csv += `Total KM,${totalKM.toFixed(2)}\n`;
 
-            message += `\n*📊 Summary:*\n`;
-            message += `📏 Total KM: ${totalKM.toFixed(2)}\n`;
-            message += `🏁 Ending Time: ${lastStop}\n`;
+            const totalWaitingMinutes = stops.reduce((sum, stop) => sum + stop.waitingTime, 0);
+            csv += `Total Waiting Time,${formatWaitingTime(totalWaitingMinutes)}\n`;
 
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappURL = `https://wa.me/?text=${encodedMessage}`;
-            window.open(whatsappURL, '_blank');
+            const lastStop = stops.length > 0 ? (stops[stops.length - 1].outTime || stops[stops.length - 1].inTime) : '-';
+            csv += `Ending Time,${lastStop}\n`;
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `vehicle_movement_${date}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+
+            showCopyNotification('CSV exported successfully!');
         }
 
         function previewData() {
@@ -794,24 +1000,23 @@
             const remarks = document.getElementById('remarks').value.trim() || 'No remarks';
 
             let preview = `
-                <div style="color: #1a1a1a; line-height: 1.8;">
-                    <h3 style="color: #1e3c72; margin-bottom: 1rem;">Vehicle Information</h3>
-                    <p><strong>🚚 Vehicle:</strong> ${vehicleName}</p>
-                    <p><strong>👤 Driver:</strong> ${driverName}</p>
-                    <p><strong>📅 Date:</strong> ${date}</p>
-                    <p><strong>🕒 Starting Time:</strong> ${startingTime}</p>
-                    <p><strong>📝 Remarks:</strong> ${remarks}</p>
+                <h3 style="color: #1e3c72; margin-bottom: 1rem; margin-top: 1.5rem;">Vehicle Information</h3>
+                <p><strong>🚛 Vehicle:</strong> ${vehicleName}</p>
+                <p><strong>👤 Driver:</strong> ${driverName}</p>
+                <p><strong>📅 Date:</strong> ${date}</p>
+                <p><strong>🕒 Starting Time:</strong> ${startingTime}</p>
+                <p><strong>📝 Remarks:</strong> ${remarks}</p>
 
-                    <h3 style="color: #1e3c72; margin-top: 2rem; margin-bottom: 1rem;">Stops</h3>
+                <h3 style="color: #1e3c72; margin-top: 2rem; margin-bottom: 1rem;">Stops</h3>
             `;
 
             if (stops.length === 0) {
-                preview += '<p style="color: #6c757d; font-style: italic;">No stops added yet</p>';
+                preview += '<p style="color: #666666; font-style: italic;">No stops added yet</p>';
             } else {
                 stops.forEach((stop, index) => {
                     preview += `
-                        <div style="background: #f8f9fa; padding: 1rem; border-left: 4px solid #2a5298; margin-bottom: 1rem; border-radius: 4px;">
-                            <h4 style="color: #1e3c72; margin-bottom: 0.5rem;">Stop ${index + 1}: ${stop.location}</h4>
+                        <div style="background: #f5f5f5; padding: 1.5rem; border-left: 4px solid #2a5298; margin-bottom: 1rem; border-radius: 4px;">
+                            <h4 style="color: #1e3c72; margin-bottom: 1rem;">Stop ${index + 1}: ${stop.location}</h4>
                             <p><strong>🟢 In Time:</strong> ${stop.inTime}</p>
                             <p><strong>🔴 Out Time:</strong> ${stop.outTime || 'N/A'}</p>
                             <p><strong>⏳ Waiting Time:</strong> ${formatWaitingTime(stop.waitingTime)}</p>
@@ -826,7 +1031,8 @@
 
                 preview += `
                     <h3 style="color: #1e3c72; margin-top: 2rem; margin-bottom: 1rem;">Summary</h3>
-                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px;">
+                    <div style="background: #f5f5f5; padding: 1.5rem; border-radius: 8px;">
+                        <p><strong>📏 Total Stops:</strong> ${stops.length}</p>
                         <p><strong>📏 Total KM:</strong> ${totalKM.toFixed(2)}</p>
                         <p><strong>⏳ Total Waiting Time:</strong> ${formatWaitingTime(totalWaitingMinutes)}</p>
                         <p><strong>🏁 Ending Time:</strong> ${lastStop}</p>
@@ -834,9 +1040,8 @@
                 `;
             }
 
-            preview += '</div>';
             document.getElementById('previewContent').innerHTML = preview;
-            document.getElementById('previewModal').style.display = 'block';
+            document.getElementById('previewModal').style.display = 'flex';
         }
 
         function closePreview() {
@@ -856,21 +1061,25 @@
                 remarks: document.getElementById('remarks').value,
                 stops: stops
             };
-            localStorage.setItem('vehicleMovementData', JSON.stringify(data));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
         }
 
         function loadFromLocalStorage() {
-            const savedData = localStorage.getItem('vehicleMovementData');
+            const savedData = localStorage.getItem(STORAGE_KEY);
             if (savedData) {
-                const data = JSON.parse(savedData);
-                document.getElementById('vehicleName').value = data.vehicleName || '';
-                document.getElementById('driverName').value = data.driverName || '';
-                document.getElementById('date').value = data.date || '';
-                document.getElementById('startingTime').value = data.startingTime || '';
-                document.getElementById('remarks').value = data.remarks || '';
-                stops = data.stops || [];
-                updateStopsDisplay();
-                updateEndingTime();
+                try {
+                    const data = JSON.parse(savedData);
+                    document.getElementById('vehicleName').value = data.vehicleName || '';
+                    document.getElementById('driverName').value = data.driverName || '';
+                    document.getElementById('date').value = data.date || '';
+                    document.getElementById('startingTime').value = data.startingTime || '';
+                    document.getElementById('remarks').value = data.remarks || '';
+                    stops = data.stops || [];
+                    updateStopsDisplay();
+                    updateEndingTime();
+                } catch (e) {
+                    console.error('Error loading data:', e);
+                }
             }
         }
 
@@ -884,7 +1093,8 @@
                 stops = [];
                 updateStopsDisplay();
                 updateEndingTime();
-                localStorage.removeItem('vehicleMovementData');
+                localStorage.removeItem(STORAGE_KEY);
+                showCopyNotification('All data cleared!');
             }
         }
 
