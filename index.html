@@ -3,38 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehicle Movement Dashboard - ERP System</title>
+    <title>Vehicle Movement Dashboard</title>
     <style>
-        /* ==================== CSS RESET & GLOBAL STYLES ==================== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        html, body {
-            height: 100%;
-            width: 100%;
-        }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f7fa;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
-            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
         }
 
-        /* ==================== HEADER SECTION ==================== */
         header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 20px 30px;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            padding: 25px;
+            border-radius: 15px 15px 0 0;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 15px;
         }
 
         .header-left {
@@ -43,63 +38,65 @@
             gap: 15px;
         }
 
-        .logo-placeholder {
-            width: 50px;
-            height: 50px;
+        .logo {
+            font-size: 40px;
+            width: 60px;
+            height: 60px;
             background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
             border: 2px solid rgba(255, 255, 255, 0.3);
         }
 
         .header-title h1 {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
-            letter-spacing: 0.5px;
+            margin-bottom: 5px;
         }
 
         .header-title p {
-            font-size: 12px;
+            font-size: 13px;
             opacity: 0.9;
-            margin-top: 3px;
         }
 
         .header-date {
-            font-size: 13px;
-            opacity: 0.8;
+            font-size: 14px;
+            opacity: 0.9;
             font-weight: 500;
         }
 
-        /* ==================== MAIN CONTAINER ==================== */
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
         }
 
-        /* ==================== DASHBOARD CARDS SECTION ==================== */
         .dashboard-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
-            margin-bottom: 30px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
         }
 
         .card {
             background: white;
-            border-radius: 12px;
             padding: 20px;
+            border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid #667eea;
             transition: all 0.3s ease;
-            border-left: 4px solid #667eea;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
 
         .card-icon {
@@ -108,7 +105,7 @@
         }
 
         .card-label {
-            font-size: 13px;
+            font-size: 12px;
             color: #666;
             font-weight: 600;
             text-transform: uppercase;
@@ -122,144 +119,15 @@
             color: #667eea;
         }
 
-        .card-secondary {
-            font-size: 12px;
-            color: #999;
-            margin-top: 5px;
+        .content {
+            padding: 25px;
         }
 
-        /* ==================== CONTROLS SECTION ==================== */
-        .controls-section {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .search-box {
-            flex: 1;
-            min-width: 200px;
-            position: relative;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 12px 15px 12px 40px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .search-box input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .search-box::before {
-            content: '🔍';
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 16px;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        /* ==================== BUTTON STYLES ==================== */
-        button {
-            padding: 11px 18px;
-            border: none;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            white-space: nowrap;
-            letter-spacing: 0.3px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: white;
-            box-shadow: 0 4px 12px rgba(17, 153, 142, 0.3);
-        }
-
-        .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(17, 153, 142, 0.4);
-        }
-
-        .btn-warning {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);
-        }
-
-        .btn-warning:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
-        }
-
-        .btn-info {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
-        }
-
-        .btn-info:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
-        }
-
-        .btn-delete {
-            background: #ffebee;
-            color: #c62828;
-            padding: 8px 12px;
-            font-size: 12px;
-        }
-
-        .btn-delete:hover {
-            background: #ffcdd2;
-            transform: translateY(-2px);
-        }
-
-        /* ==================== FORM SECTION ==================== */
         .form-section {
-            background: white;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             padding: 20px;
             border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
             border-left: 4px solid #667eea;
         }
 
@@ -268,9 +136,6 @@
             font-weight: 700;
             color: #333;
             margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .form-grid {
@@ -297,7 +162,7 @@
         .form-group input,
         .form-group select {
             padding: 10px 12px;
-            border: 2px solid #e0e0e0;
+            border: 2px solid #ddd;
             border-radius: 8px;
             font-size: 13px;
             transition: all 0.3s ease;
@@ -318,12 +183,125 @@
             flex-wrap: wrap;
         }
 
-        /* ==================== TABLE SECTION ==================== */
+        button {
+            padding: 11px 18px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(17, 153, 142, 0.3);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(17, 153, 142, 0.4);
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+        }
+
+        .btn-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        .btn-delete {
+            background: #ffebee;
+            color: #c62828;
+            padding: 8px 12px;
+            font-size: 12px;
+            box-shadow: none;
+        }
+
+        .btn-delete:hover {
+            background: #ffcdd2;
+            transform: translateY(-2px);
+        }
+
+        .controls-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-box::before {
+            content: '🔍';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+        }
+
         .table-section {
             background: white;
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             overflow: hidden;
+            margin-bottom: 20px;
         }
 
         .table-wrapper {
@@ -333,7 +311,6 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
         }
 
         thead {
@@ -371,14 +348,12 @@
 
         tbody tr:hover {
             background: linear-gradient(90deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.02);
         }
 
         tbody tr.hidden {
             display: none;
         }
 
-        /* ==================== EMPTY STATE ==================== */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -391,12 +366,6 @@
             opacity: 0.5;
         }
 
-        .empty-state-text {
-            font-size: 14px;
-            color: #aaa;
-        }
-
-        /* ==================== MODAL STYLES ==================== */
         .modal {
             display: none;
             position: fixed;
@@ -406,22 +375,18 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal.show {
-            display: flex;
             align-items: center;
             justify-content: center;
         }
 
+        .modal.show {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal-content {
@@ -429,10 +394,10 @@
             padding: 30px;
             border-radius: 12px;
             width: 90%;
-            max-width: 600px;
+            max-width: 700px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             animation: slideIn 0.3s ease;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
         }
 
@@ -474,26 +439,24 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
         }
 
         .modal-close:hover {
             color: #333;
-            transform: rotate(90deg);
         }
 
         .modal-text {
             background: #f5f5f5;
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
             font-family: 'Courier New', monospace;
-            font-size: 12px;
-            line-height: 1.8;
+            font-size: 13px;
+            line-height: 1.9;
             color: #333;
             border-left: 4px solid #667eea;
             white-space: pre-wrap;
             word-wrap: break-word;
-            max-height: 400px;
+            max-height: 450px;
             overflow-y: auto;
         }
 
@@ -504,7 +467,6 @@
             justify-content: flex-end;
         }
 
-        /* ==================== TOAST NOTIFICATION ==================== */
         .toast {
             position: fixed;
             bottom: 20px;
@@ -525,10 +487,6 @@
             background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
         }
 
-        .toast.warning {
-            background: linear-gradient(135deg, #fa7e1e 0%, #ffd860 100%);
-        }
-
         @keyframes slideUp {
             from {
                 transform: translateY(100px);
@@ -540,17 +498,15 @@
             }
         }
 
-        /* ==================== FOOTER ==================== */
         footer {
-            text-align: center;
+            background: #f8f9fa;
             padding: 20px;
+            text-align: center;
             color: #999;
             font-size: 12px;
-            margin-top: 30px;
             border-top: 1px solid #e0e0e0;
         }
 
-        /* ==================== PRINT STYLES ==================== */
         @media print {
             body {
                 background: white;
@@ -561,35 +517,26 @@
             .controls-section,
             .form-section,
             .dashboard-cards,
-            footer,
-            .no-print {
+            footer {
                 display: none !important;
             }
 
             .container {
-                padding: 10px;
-                margin: 0;
+                box-shadow: none;
+                border-radius: 0;
+                max-width: 100%;
             }
 
-            .table-section {
-                box-shadow: none;
-                page-break-inside: avoid;
+            .content {
+                padding: 10px;
             }
 
             table {
                 page-break-inside: avoid;
             }
 
-            thead {
-                display: table-header-group;
-            }
-
             tbody tr {
                 page-break-inside: avoid;
-            }
-
-            .table-wrapper {
-                overflow: visible;
             }
 
             @page {
@@ -598,57 +545,38 @@
             }
         }
 
-        /* ==================== RESPONSIVE DESIGN ==================== */
         @media (max-width: 768px) {
             header {
-                padding: 15px 20px;
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
             }
 
             .header-left {
                 width: 100%;
+                justify-content: center;
             }
 
             .header-title h1 {
-                font-size: 18px;
-            }
-
-            .header-date {
-                width: 100%;
-                text-align: right;
-            }
-
-            .logo-placeholder {
-                width: 40px;
-                height: 40px;
-                font-size: 22px;
+                font-size: 20px;
             }
 
             .dashboard-cards {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
+                padding: 15px;
+            }
+
+            .card {
+                padding: 15px;
             }
 
             .card-value {
                 font-size: 24px;
             }
 
-            .controls-section {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .search-box {
-                min-width: 100%;
-            }
-
-            .button-group {
-                width: 100%;
-            }
-
-            .button-group button {
-                flex: 1;
-                justify-content: center;
-                min-height: 40px;
+            .content {
+                padding: 15px;
             }
 
             .form-grid {
@@ -663,9 +591,13 @@
                 width: 100%;
             }
 
-            .table-wrapper {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
+            .controls-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                min-width: 100%;
             }
 
             th, td {
@@ -679,13 +611,19 @@
             }
 
             .modal-text {
-                font-size: 11px;
+                font-size: 12px;
             }
         }
 
         @media (max-width: 480px) {
-            .container {
-                padding: 10px;
+            header {
+                padding: 15px;
+            }
+
+            .logo {
+                width: 50px;
+                height: 50px;
+                font-size: 28px;
             }
 
             .header-title h1 {
@@ -693,23 +631,13 @@
             }
 
             .dashboard-cards {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .card {
-                padding: 15px;
-            }
-
-            .card-value {
-                font-size: 20px;
-            }
-
-            .card-icon {
-                font-size: 24px;
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 12px;
             }
 
             button {
-                padding: 10px 14px;
+                padding: 10px 12px;
                 font-size: 12px;
             }
 
@@ -717,35 +645,27 @@
                 padding: 8px 6px;
                 font-size: 11px;
             }
-        }
 
-        /* ==================== UTILITY CLASSES ==================== */
-        .no-print {
-            print: none;
+            .modal-text {
+                font-size: 11px;
+                padding: 15px;
+            }
         }
 
         .hidden {
             display: none !important;
         }
 
-        .text-center {
-            text-align: center;
-        }
-
         .text-bold {
             font-weight: 700;
-        }
-
-        .text-muted {
-            color: #999;
         }
     </style>
 </head>
 <body>
-    <!-- ==================== HEADER ==================== -->
+    <!-- HEADER -->
     <header>
         <div class="header-left">
-            <div class="logo-placeholder">🚛</div>
+            <div class="logo">🚛</div>
             <div class="header-title">
                 <h1>Vehicle Movement Dashboard</h1>
                 <p>Professional Fleet Management System</p>
@@ -754,132 +674,134 @@
         <div class="header-date" id="headerDate"></div>
     </header>
 
-    <!-- ==================== MAIN CONTAINER ==================== -->
+    <!-- MAIN CONTAINER -->
     <div class="container">
-        <!-- ==================== DASHBOARD CARDS ==================== -->
+        <!-- DASHBOARD CARDS -->
         <div class="dashboard-cards">
             <div class="card">
                 <div class="card-icon">🚗</div>
                 <div class="card-label">Total Vehicles</div>
                 <div class="card-value" id="totalVehicles">0</div>
-                <div class="card-secondary" id="vehiclesList">No vehicles yet</div>
             </div>
 
             <div class="card">
                 <div class="card-icon">🛣️</div>
                 <div class="card-label">Total Trips</div>
                 <div class="card-value" id="totalTrips">0</div>
-                <div class="card-secondary" id="tripsToday">Today's trips</div>
             </div>
 
             <div class="card">
                 <div class="card-icon">📏</div>
                 <div class="card-label">Total KM</div>
                 <div class="card-value" id="totalKM">0</div>
-                <div class="card-secondary" id="kmUnit">kilometers traveled</div>
             </div>
 
             <div class="card">
                 <div class="card-icon">👨</div>
                 <div class="card-label">Total Drivers</div>
                 <div class="card-value" id="totalDrivers">0</div>
-                <div class="card-secondary" id="driversList">Active drivers</div>
             </div>
         </div>
 
-        <!-- ==================== ADD ENTRY FORM ==================== -->
-        <div class="form-section">
-            <div class="form-title">➕ Add New Entry</div>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="date">Date</label>
-                    <input type="date" id="date" required>
+        <!-- CONTENT -->
+        <div class="content">
+            <!-- ADD ENTRY FORM -->
+            <div class="form-section">
+                <div class="form-title">➕ Add New Entry</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="inTime">In Time</label>
+                        <input type="time" id="inTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="outTime">Out Time</label>
+                        <input type="time" id="outTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicleNumber">Vehicle Number</label>
+                        <input type="text" id="vehicleNumber" placeholder="e.g., ABC-123" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="driverName">Driver Name</label>
+                        <input type="text" id="driverName" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="locationIn">Location In</label>
+                        <input type="text" id="locationIn" placeholder="Starting point" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="kmIn">KM In</label>
+                        <input type="number" id="kmIn" placeholder="0" step="0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="locationOut">Location Out</label>
+                        <input type="text" id="locationOut" placeholder="Ending point" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="kmOut">KM Out</label>
+                        <input type="number" id="kmOut" placeholder="0" step="0.1" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="inTime">In Time</label>
-                    <input type="time" id="inTime" required>
-                </div>
-                <div class="form-group">
-                    <label for="vehicleNumber">Vehicle Number</label>
-                    <input type="text" id="vehicleNumber" placeholder="e.g., ABC-123" required>
-                </div>
-                <div class="form-group">
-                    <label for="driverName">Driver Name</label>
-                    <input type="text" id="driverName" placeholder="Full Name" required>
-                </div>
-                <div class="form-group">
-                    <label for="locationIn">Location In</label>
-                    <input type="text" id="locationIn" placeholder="Starting point" required>
-                </div>
-                <div class="form-group">
-                    <label for="kmIn">KM In</label>
-                    <input type="number" id="kmIn" placeholder="0" step="0.1" required>
-                </div>
-                <div class="form-group">
-                    <label for="outTime">Out Time</label>
-                    <input type="time" id="outTime" required>
-                </div>
-                <div class="form-group">
-                    <label for="locationOut">Location Out</label>
-                    <input type="text" id="locationOut" placeholder="Ending point" required>
-                </div>
-                <div class="form-group">
-                    <label for="kmOut">KM Out</label>
-                    <input type="number" id="kmOut" placeholder="0" step="0.1" required>
+                <div class="form-actions">
+                    <button class="btn-primary" onclick="addEntry()">✅ Add Entry</button>
+                    <button class="btn-success" onclick="resetForm()">🔄 Clear Form</button>
                 </div>
             </div>
-            <div class="form-actions">
-                <button class="btn-primary" onclick="addEntry()">✅ Add Entry</button>
-                <button class="btn-success" onclick="resetForm()">🔄 Clear Form</button>
-            </div>
-        </div>
 
-        <!-- ==================== CONTROLS SECTION ==================== -->
-        <div class="controls-section no-print">
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Search by vehicle, driver, or location..." onkeyup="filterTable()">
-            </div>
-            <div class="button-group">
+            <!-- CONTROLS SECTION -->
+            <div class="controls-section">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search by vehicle, driver, or location..." onkeyup="filterTable()">
+                </div>
                 <button class="btn-primary" onclick="printTable()">🖨️ Print</button>
                 <button class="btn-info" onclick="exportToCSV()">📊 Export CSV</button>
                 <button class="btn-warning" onclick="openWhatsAppModal()">💬 WhatsApp</button>
             </div>
-        </div>
 
-        <!-- ==================== TABLE SECTION ==================== -->
-        <div class="table-section">
-            <div class="table-wrapper">
-                <table id="dataTable">
-                    <thead>
-                        <tr>
-                            <th>S.No</th>
-                            <th>Date</th>
-                            <th>In Time</th>
-                            <th>Vehicle #</th>
-                            <th>Driver Name</th>
-                            <th>Location In</th>
-                            <th>KM In</th>
-                            <th>Out Time</th>
-                            <th>Location Out</th>
-                            <th>KM Out</th>
-                            <th>Total KM</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <tr class="empty-state">
-                            <td colspan="12">
-                                <div class="empty-state-icon">📭</div>
-                                <div class="empty-state-text">No entries yet. Add your first vehicle movement entry!</div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- TABLE SECTION -->
+            <div class="table-section">
+                <div class="table-wrapper">
+                    <table id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Date</th>
+                                <th>In Time</th>
+                                <th>Vehicle #</th>
+                                <th>Driver Name</th>
+                                <th>Location In</th>
+                                <th>KM In</th>
+                                <th>Out Time</th>
+                                <th>Location Out</th>
+                                <th>KM Out</th>
+                                <th>Total KM</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <tr class="empty-state">
+                                <td colspan="12">
+                                    <div class="empty-state-icon">📭</div>
+                                    <div>No entries yet. Add your first vehicle movement entry!</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
+
+        <!-- FOOTER -->
+        <footer>
+            <p>© 2024 Vehicle Movement Dashboard | Data saved automatically | Last updated: <span id="lastUpdated">-</span></p>
+        </footer>
     </div>
 
-    <!-- ==================== WHATSAPP MODAL ==================== -->
+    <!-- WHATSAPP MODAL -->
     <div id="whatsappModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -894,27 +816,20 @@
         </div>
     </div>
 
-    <!-- ==================== FOOTER ==================== -->
-    <footer>
-        <p>© 2024 Vehicle Movement Dashboard | Data saved automatically to local storage</p>
-    </footer>
-
-    <!-- ==================== JAVASCRIPT ==================== -->
+    <!-- JAVASCRIPT -->
     <script>
-        // ==================== CONSTANTS & VARIABLES ====================
         const STORAGE_KEY = 'vehicleMovementData';
         let allData = [];
         let filteredData = [];
 
-        // ==================== INITIALIZATION ====================
         document.addEventListener('DOMContentLoaded', function() {
             initializePage();
         });
 
         function initializePage() {
-            // Set today's date in form
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('date').value = today;
+            
             document.getElementById('headerDate').textContent = new Date().toLocaleDateString('en-US', {
                 weekday: 'long',
                 year: 'numeric',
@@ -922,13 +837,11 @@
                 day: 'numeric'
             });
 
-            // Load saved data
             loadData();
             renderTable();
             updateDashboard();
         }
 
-        // ==================== DATA MANAGEMENT ====================
         function loadData() {
             try {
                 const stored = localStorage.getItem(STORAGE_KEY);
@@ -944,6 +857,7 @@
         function saveData() {
             try {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(allData));
+                document.getElementById('lastUpdated').textContent = new Date().toLocaleTimeString();
                 showToast('✅ Data saved to local storage', 'success');
             } catch (error) {
                 console.error('Error saving data:', error);
@@ -951,22 +865,19 @@
             }
         }
 
-        // ==================== FORM OPERATIONS ====================
         function addEntry() {
-            // Get form values
             const date = document.getElementById('date').value;
             const inTime = document.getElementById('inTime').value;
+            const outTime = document.getElementById('outTime').value;
             const vehicleNumber = document.getElementById('vehicleNumber').value.toUpperCase().trim();
             const driverName = document.getElementById('driverName').value.trim();
             const locationIn = document.getElementById('locationIn').value.trim();
             const kmIn = parseFloat(document.getElementById('kmIn').value);
-            const outTime = document.getElementById('outTime').value;
             const locationOut = document.getElementById('locationOut').value.trim();
             const kmOut = parseFloat(document.getElementById('kmOut').value);
 
-            // Validation
             if (!date || !inTime || !outTime || !vehicleNumber || !driverName || !locationIn || !locationOut || isNaN(kmIn) || isNaN(kmOut)) {
-                showToast('⚠️ Please fill all fields', 'warning');
+                showToast('⚠️ Please fill all fields', 'error');
                 return;
             }
 
@@ -975,29 +886,25 @@
                 return;
             }
 
-            // Calculate total KM
             const totalKm = (kmOut - kmIn).toFixed(1);
 
-            // Create entry object
             const entry = {
                 id: Date.now(),
                 date: date,
                 inTime: inTime,
+                outTime: outTime,
                 vehicleNumber: vehicleNumber,
                 driverName: driverName,
                 locationIn: locationIn,
                 kmIn: kmIn.toFixed(1),
-                outTime: outTime,
                 locationOut: locationOut,
                 kmOut: kmOut.toFixed(1),
                 totalKm: totalKm
             };
 
-            // Add to data
             allData.unshift(entry);
             filteredData = [...allData];
 
-            // Save and update UI
             saveData();
             renderTable();
             updateDashboard();
@@ -1020,17 +927,15 @@
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('date').value = today;
             document.getElementById('inTime').value = '';
+            document.getElementById('outTime').value = '';
             document.getElementById('vehicleNumber').value = '';
             document.getElementById('driverName').value = '';
             document.getElementById('locationIn').value = '';
             document.getElementById('kmIn').value = '';
-            document.getElementById('outTime').value = '';
             document.getElementById('locationOut').value = '';
             document.getElementById('kmOut').value = '';
-            document.getElementById('vehicleNumber').focus();
         }
 
-        // ==================== TABLE RENDERING ====================
         function renderTable() {
             const tableBody = document.getElementById('tableBody');
 
@@ -1039,7 +944,7 @@
                     <tr class="empty-state">
                         <td colspan="12">
                             <div class="empty-state-icon">📭</div>
-                            <div class="empty-state-text">No entries found. Add your first vehicle movement entry!</div>
+                            <div>No entries found. Add your first vehicle movement entry!</div>
                         </td>
                     </tr>
                 `;
@@ -1066,7 +971,6 @@
             `).join('');
         }
 
-        // ==================== SEARCH & FILTER ====================
         function filterTable() {
             const searchValue = document.getElementById('searchInput').value.toLowerCase();
 
@@ -1085,39 +989,29 @@
             renderTable();
         }
 
-        // ==================== DASHBOARD UPDATE ====================
         function updateDashboard() {
-            // Total Vehicles
             const uniqueVehicles = [...new Set(allData.map(item => item.vehicleNumber))];
             document.getElementById('totalVehicles').textContent = uniqueVehicles.length;
-            document.getElementById('vehiclesList').textContent = uniqueVehicles.length > 0 ? `${uniqueVehicles.length} vehicle(s)` : 'No vehicles yet';
 
-            // Total Trips
             document.getElementById('totalTrips').textContent = allData.length;
-            document.getElementById('tripsToday').textContent = allData.length > 0 ? `${allData.length} trip(s)` : 'No trips yet';
 
-            // Total KM
             const totalKm = allData.reduce((sum, item) => sum + parseFloat(item.totalKm), 0).toFixed(1);
             document.getElementById('totalKM').textContent = totalKm;
-            document.getElementById('kmUnit').textContent = `${totalKm} km traveled`;
 
-            // Total Drivers
             const uniqueDrivers = [...new Set(allData.map(item => item.driverName))];
             document.getElementById('totalDrivers').textContent = uniqueDrivers.length;
-            document.getElementById('driversList').textContent = uniqueDrivers.length > 0 ? `${uniqueDrivers.length} driver(s)` : 'No drivers yet';
         }
 
-        // ==================== EXPORT FUNCTIONS ====================
         function exportToCSV() {
             if (allData.length === 0) {
-                showToast('⚠️ No data to export', 'warning');
+                showToast('⚠️ No data to export', 'error');
                 return;
             }
 
-            let csvContent = 'S.No,Date,In Time,Vehicle Number,Driver Name,Location In,KM In,Out Time,Location Out,KM Out,Total KM\n';
+            let csvContent = 'S.No,Date,In Time,Out Time,Vehicle Number,Driver Name,Location In,KM In,Location Out,KM Out,Total KM\n';
 
             allData.forEach((item, index) => {
-                csvContent += `${index + 1},"${item.date}","${item.inTime}","${item.vehicleNumber}","${item.driverName}","${item.locationIn}","${item.kmIn}","${item.outTime}","${item.locationOut}","${item.kmOut}","${item.totalKm}"\n`;
+                csvContent += `${index + 1},"${item.date}","${item.inTime}","${item.outTime}","${item.vehicleNumber}","${item.driverName}","${item.locationIn}","${item.kmIn}","${item.locationOut}","${item.kmOut}","${item.totalKm}"\n`;
             });
 
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -1135,42 +1029,61 @@
             showToast('📊 CSV exported successfully!', 'success');
         }
 
-        // ==================== PRINT FUNCTION ====================
         function printTable() {
             window.print();
-            showToast('🖨️ Printing...', 'success');
         }
 
-        // ==================== WHATSAPP SHARE ====================
         function openWhatsAppModal() {
             if (allData.length === 0) {
-                showToast('⚠️ No data to share', 'warning');
+                showToast('⚠️ No data to share', 'error');
                 return;
             }
 
-            let whatsappText = '🚚 *TODAY VEHICLE MOVEMENT REPORT*\n\n';
-            whatsappText += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n';
+            let whatsappText = '';
+            const today = new Date();
+            const dateStr = today.toLocaleDateString('ta-IN');
+            
+            whatsappText += '═══════════════════════════════════\n';
+            whatsappText += '🚛 *VEHICLE MOVEMENT REPORT*\n';
+            whatsappText += '═══════════════════════════════════\n';
+            whatsappText += `📅 Date: ${dateStr}\n`;
+            whatsappText += `⏰ Time: ${today.toLocaleTimeString()}\n\n`;
 
             allData.forEach((item, index) => {
-                whatsappText += `${index + 1}️⃣\n`;
-                whatsappText += `🚛 *${item.vehicleNumber}*\n`;
-                whatsappText += `👨 ${item.driverName}\n`;
-                whatsappText += `📅 ${formatDate(item.date)}\n`;
-                whatsappText += `🕒 ${item.inTime} → ${item.outTime}\n`;
-                whatsappText += `📍 ${item.locationIn}\n`;
-                whatsappText += `⬇️\n`;
-                whatsappText += `📍 ${item.locationOut}\n`;
-                whatsappText += `📏 ${item.kmIn} → ${item.kmOut}\n`;
-                whatsappText += `🛣️ *Total: ${item.totalKm} KM*\n\n`;
-                whatsappText += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n';
+                whatsappText += `┌─────────────────────────────────\n`;
+                whatsappText += `│ ${index + 1}️⃣ TRIP #${index + 1}\n`;
+                whatsappText += `├─────────────────────────────────\n`;
+                whatsappText += `│ 🚗 VEHICLE: ${item.vehicleNumber}\n`;
+                whatsappText += `│ 👨 DRIVER: ${item.driverName}\n`;
+                whatsappText += `├─────────────────────────────────\n`;
+                whatsappText += `│ ⏱️  IN TIME:  ${item.inTime}\n`;
+                whatsappText += `│ ⏱️  OUT TIME: ${item.outTime}\n`;
+                whatsappText += `├─────────────────────────────────\n`;
+                whatsappText += `│ 📍 FROM: ${item.locationIn}\n`;
+                whatsappText += `│    KM: ${item.kmIn}\n`;
+                whatsappText += `│\n`;
+                whatsappText += `│ 📍 TO:   ${item.locationOut}\n`;
+                whatsappText += `│    KM: ${item.kmOut}\n`;
+                whatsappText += `├─────────────────────────────────\n`;
+                whatsappText += `│ 🛣️  *TOTAL KM: ${item.totalKm} KM*\n`;
+                whatsappText += `└─────────────────────────────────\n\n`;
             });
 
-            whatsappText += `📊 *SUMMARY*\n`;
-            whatsappText += `• Total Trips: ${allData.length}\n`;
-            whatsappText += `• Total KM: ${allData.reduce((sum, item) => sum + parseFloat(item.totalKm), 0).toFixed(1)}\n`;
-            whatsappText += `• Vehicles: ${[...new Set(allData.map(item => item.vehicleNumber))].length}\n`;
-            whatsappText += `• Drivers: ${[...new Set(allData.map(item => item.driverName))].length}\n\n`;
-            whatsappText += `📱 Generated from Vehicle Movement Dashboard`;
+            const totalTrips = allData.length;
+            const totalKm = allData.reduce((sum, item) => sum + parseFloat(item.totalKm), 0).toFixed(1);
+            const uniqueVehicles = [...new Set(allData.map(item => item.vehicleNumber))].length;
+            const uniqueDrivers = [...new Set(allData.map(item => item.driverName))].length;
+
+            whatsappText += '═══════════════════════════════════\n';
+            whatsappText += '📊 *SUMMARY*\n';
+            whatsappText += '═══════════════════════════════════\n';
+            whatsappText += `• 🛣️  Total Trips: ${totalTrips}\n`;
+            whatsappText += `• 📏 Total KM: ${totalKm}\n`;
+            whatsappText += `• 🚗 Vehicles: ${uniqueVehicles}\n`;
+            whatsappText += `• 👨 Drivers: ${uniqueDrivers}\n`;
+            whatsappText += `═══════════════════════════════════\n`;
+            whatsappText += `\n_Generated from Vehicle Movement Dashboard_\n`;
+            whatsappText += `_${today.toLocaleString()}_`;
 
             document.getElementById('whatsappText').textContent = whatsappText;
             document.getElementById('whatsappModal').classList.add('show');
@@ -1190,7 +1103,6 @@
             });
         }
 
-        // ==================== UTILITY FUNCTIONS ====================
         function formatDate(dateString) {
             const options = { year: 'numeric', month: 'short', day: 'numeric' };
             return new Date(dateString).toLocaleDateString('en-US', options);
@@ -1207,7 +1119,6 @@
             }, 3000);
         }
 
-        // ==================== MODAL CLOSE ON BACKGROUND CLICK ====================
         window.onclick = function(event) {
             const modal = document.getElementById('whatsappModal');
             if (event.target === modal) {
@@ -1215,12 +1126,11 @@
             }
         }
 
-        // ==================== AUTO-SAVE ON PERIODIC INTERVAL ====================
         setInterval(() => {
             if (allData.length > 0) {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(allData));
             }
-        }, 30000); // Auto-save every 30 seconds
+        }, 30000);
     </script>
 </body>
 </html>
